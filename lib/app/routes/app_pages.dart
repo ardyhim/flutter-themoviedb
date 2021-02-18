@@ -11,7 +11,7 @@ import 'package:hypemovies/app/modules/list/views/list_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.DETAIL;
+  static const INITIAL = Routes.HOME;
 
   static final routes = [
     GetPage(

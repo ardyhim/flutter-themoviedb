@@ -24,10 +24,10 @@ class DetailView extends GetView<DetailController> {
                     height: 350,
                     decoration: BoxDecoration(
                       color: Colors.redAccent,
-                      // image: DecorationImage(
-                      //   fit: BoxFit.cover,
-                      //   image: NetworkImage(movie.posterUrl),
-                      // ),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(movie.posterUrl),
+                      ),
                     ),
                     child: Stack(
                       children: [
@@ -77,10 +77,10 @@ class DetailView extends GetView<DetailController> {
                               decoration: BoxDecoration(
                                 color: Colors.greenAccent,
                                 borderRadius: BorderRadius.circular(5),
-                                // image: DecorationImage(
-                                //   fit: BoxFit.cover,
-                                //   image: NetworkImage(movie.thumbnailUrl),
-                                // ),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(movie.thumbnailUrl),
+                                ),
                               ),
                             ),
                           ),
@@ -104,7 +104,7 @@ class DetailView extends GetView<DetailController> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "The Walking Dead 2",
+                            movie.title,
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class DetailView extends GetView<DetailController> {
                               height: 40,
                               elevation: 1,
                               // padding: EdgeInsets.all(20),
-                              text: '132 min',
+                              text: movie.runtime,
                               firstColor: Colors.yellowAccent,
                               secondColor: Colors.orangeAccent,
                               onTap: () {},
@@ -137,7 +137,7 @@ class DetailView extends GetView<DetailController> {
                     // margin: EdgeInsets.symmetric(horizontal: 20),
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 10,
+                      itemCount: movie.genre.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, int i) {
                         return Container(
@@ -150,7 +150,7 @@ class DetailView extends GetView<DetailController> {
                             backgroundColor: Colors.orangeAccent,
                             elevation: 1,
                             label: Text(
-                              "HELLO $i",
+                              movie.genre[i].name,
                               style: TextStyle(
                                 color: Colors.white,
                               ),
@@ -165,7 +165,7 @@ class DetailView extends GetView<DetailController> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "When the crew of a space junk collector ship called The Victory discovers a humanoid robot named Dorothy that's known to be a weapon of mass destruction, they get involved in a risky business deal which puts their lives at stake.",
+                      movie.description,
                       style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
                     ),
                   ),
@@ -173,8 +173,6 @@ class DetailView extends GetView<DetailController> {
                 SliverToBoxAdapter(
                   child: Container(
                     width: size.width,
-                    // height: 100,
-                    // color: Colors.orangeAccent,
                     child: TabBar(
                       labelColor: Colors.black87,
                       indicatorColor: Colors.orangeAccent,
@@ -207,16 +205,16 @@ class DetailView extends GetView<DetailController> {
                                       decoration: BoxDecoration(
                                         color: Colors.redAccent,
                                         borderRadius: BorderRadius.circular(10),
-                                        // image: DecorationImage(
-                                        //   image: NetworkImage(val.moviesPopular.value[i].thumbnailUrl),
-                                        //   fit: BoxFit.cover,
-                                        // ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(movie.relatedMovie[i].thumbnailUrl),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                                       child: Text(
-                                        "title related",
+                                        movie.relatedMovie[i].title,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,
@@ -234,7 +232,7 @@ class DetailView extends GetView<DetailController> {
                         ),
                         Container(
                           child: ListView.builder(
-                            itemCount: 10,
+                            itemCount: movie.cast.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, int i) {
                               return Container(
@@ -247,16 +245,16 @@ class DetailView extends GetView<DetailController> {
                                       decoration: BoxDecoration(
                                         color: Colors.redAccent,
                                         borderRadius: BorderRadius.circular(10),
-                                        // image: DecorationImage(
-                                        //   image: NetworkImage(val.moviesPopular.value[i].thumbnailUrl),
-                                        //   fit: BoxFit.cover,
-                                        // ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(movie.cast[i].imageUrl),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                                       child: Text(
-                                        "title related",
+                                        movie.cast[i].name,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,

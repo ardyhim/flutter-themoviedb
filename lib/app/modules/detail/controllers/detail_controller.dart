@@ -10,11 +10,11 @@ class DetailController extends GetxController with StateMixin<MoviesDetail> {
   final count = 0.obs;
   @override
   void onInit() async {
-    // change(MoviesDetail(), status: RxStatus.loading());
-    // movies.value = await apiRepository.getDetails(
-    //   type: Get.parameters["type"],
-    //   id: Get.parameters["id"],
-    // );
+    change(MoviesDetail(), status: RxStatus.loading());
+    movies.value = await apiRepository.getDetails(
+      type: Get.parameters["type"],
+      id: Get.parameters["id"],
+    );
 
     change(movies.value, status: RxStatus.success());
     super.onInit();
