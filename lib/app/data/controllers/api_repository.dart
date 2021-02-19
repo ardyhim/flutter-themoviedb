@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hypemovies/app/data/models/movies_detail_model.dart';
 import 'package:hypemovies/app/data/models/movies_list_model.dart';
+import 'package:hypemovies/app/data/models/movies_search_model.dart';
 import 'package:hypemovies/app/data/providers/api_provider.dart';
 import 'package:meta/meta.dart';
 
@@ -33,8 +34,20 @@ class ApiRepository {
     if (res.status.hasError) {
       return Future.error(res.statusText);
     } else {
-      // var data = jsonDecode(res.body);
       MoviesDetail movies = new MoviesDetail.fromRawJson(res.body);
+      return movies;
+    }
+  }
+
+  Future<MoviesSearch> getSearch({
+    String keyword = "movie",
+    page,
+  }) async {
+    final res = await provider.getSearch(keyword: keyword, page: page);
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      MoviesSearch movies = new MoviesSearch.fromRawJson(res.body);
       return movies;
     }
   }

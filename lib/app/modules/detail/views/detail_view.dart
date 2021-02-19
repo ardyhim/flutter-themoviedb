@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class DetailView extends GetView<DetailController> {
                       color: Colors.redAccent,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(movie.posterUrl),
+                        image: CachedNetworkImageProvider(movie.posterUrl),
                       ),
                     ),
                     child: Stack(
@@ -79,51 +80,20 @@ class DetailView extends GetView<DetailController> {
                                 borderRadius: BorderRadius.circular(5),
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(movie.thumbnailUrl),
+                                  image: CachedNetworkImageProvider(movie.thumbnailUrl),
                                 ),
                               ),
                             ),
                           ),
                         ),
                         Positioned(
+                          top: 20,
                           child: IconButton(
-                            icon: Icon(Icons.arrow_back_rounded),
+                            icon: Icon(
+                              Icons.arrow_back_rounded,
+                              size: 35,
+                            ),
                             onPressed: () => Get.back(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    width: size.width,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            movie.title,
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: CustomButton(
-                              height: 40,
-                              elevation: 1,
-                              // padding: EdgeInsets.all(20),
-                              text: movie.runtime,
-                              firstColor: Colors.yellowAccent,
-                              secondColor: Colors.orangeAccent,
-                              onTap: () {},
-                            ),
                           ),
                         ),
                       ],
@@ -147,7 +117,7 @@ class DetailView extends GetView<DetailController> {
                                   horizontal: 5,
                                 ),
                           child: Chip(
-                            backgroundColor: Colors.orangeAccent,
+                            backgroundColor: Colors.redAccent,
                             elevation: 1,
                             label: Text(
                               movie.genre[i].name,
@@ -164,9 +134,58 @@ class DetailView extends GetView<DetailController> {
                 SliverToBoxAdapter(
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
+                    width: size.width,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            movie.title,
+                            style: Theme.of(context).textTheme.headline4.copyWith(
+                                  color: Colors.black,
+                                ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              movie.runtime,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            // child: CustomButton(
+                            //   height: 40,
+                            //   elevation: 1,
+                            //   // padding: EdgeInsets.all(20),
+                            //   text: movie.runtime,
+                            //   firstColor: Colors.yellowAccent,
+                            //   secondColor: Colors.orangeAccent,
+                            //   onTap: () {},
+                            // ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      movie.release.year.toString(),
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       movie.description,
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
+                      style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15),
                     ),
                   ),
                 ),
@@ -187,12 +206,12 @@ class DetailView extends GetView<DetailController> {
                 SliverToBoxAdapter(
                   child: Container(
                     width: size.width,
-                    height: 200,
+                    height: 210,
                     child: TabBarView(
                       children: <Widget>[
                         Container(
                           child: ListView.builder(
-                            itemCount: 10,
+                            itemCount: movie.relatedMovie.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, int i) {
                               return Container(
@@ -206,13 +225,13 @@ class DetailView extends GetView<DetailController> {
                                         color: Colors.redAccent,
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
-                                          image: NetworkImage(movie.relatedMovie[i].thumbnailUrl),
+                                          image: CachedNetworkImageProvider(movie.relatedMovie[i].thumbnailUrl),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                                       child: Text(
                                         movie.relatedMovie[i].title,
                                         maxLines: 2,
@@ -246,13 +265,13 @@ class DetailView extends GetView<DetailController> {
                                         color: Colors.redAccent,
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
-                                          image: NetworkImage(movie.cast[i].imageUrl),
+                                          image: CachedNetworkImageProvider(movie.cast[i].imageUrl),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                                       child: Text(
                                         movie.cast[i].name,
                                         maxLines: 2,

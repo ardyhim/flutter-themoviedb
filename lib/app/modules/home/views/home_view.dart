@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeController hc = Get.find<HomeController>();
+  TextEditingController _searchController = new TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
     Size size = context.mediaQuery.size;
@@ -29,7 +31,7 @@ class HomeView extends GetView<HomeController> {
                       color: Colors.red,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
+                        image: CachedNetworkImageProvider(
                           "https://source.unsplash.com/500x300/?design",
                         ),
                       ),
@@ -51,14 +53,21 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                               child: TextField(
+                                controller: _searchController,
+                                keyboardType: TextInputType.text,
+                                onSubmitted: (v) {
+                                  Get.toNamed("/search/${_searchController.text}/1");
+                                },
                                 decoration: InputDecoration(
                                   hintText: "Search for movies,tv show...",
-                                  hintStyle: TextStyle(color: Colors.black),
                                   focusColor: Colors.redAccent,
                                   fillColor: Colors.white70,
-                                  suffixIcon: Icon(
-                                    Icons.search,
-                                    color: Colors.red,
+                                  suffixIcon: IconButton(
+                                    color: Colors.redAccent,
+                                    icon: Icon(Icons.search),
+                                    onPressed: () {
+                                      Get.toNamed("/search/${_searchController.text}/1");
+                                    },
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -66,7 +75,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                                    borderSide: BorderSide(color: Colors.red, width: 2),
+                                    borderSide: BorderSide(color: Colors.redAccent, width: 2),
                                   ),
                                   border: new OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
@@ -170,36 +179,41 @@ class HomeView extends GetView<HomeController> {
                     itemCount: val.moviesPopular == null ? 0 : val.moviesPopular.value.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, int i) {
-                      return Container(
-                        width: 100,
-                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: Colors.redAccent,
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: NetworkImage(val.moviesPopular.value[i].thumbnailUrl),
-                                  fit: BoxFit.cover,
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed("/detail/movie/${val.moviesPopular.value[i].videosId}");
+                        },
+                        child: Container(
+                          width: 100,
+                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 140,
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: CachedNetworkImageProvider(val.moviesPopular.value[i].thumbnailUrl),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Text(
-                                "${val.moviesPopular.value[i].title}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  "${val.moviesPopular.value[i].title}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -234,7 +248,7 @@ class HomeView extends GetView<HomeController> {
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: NetworkImage("https://source.unsplash.com/500x300/?movies"),
+                              image: CachedNetworkImageProvider("https://source.unsplash.com/500x300/?movies"),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -285,7 +299,7 @@ class HomeView extends GetView<HomeController> {
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: NetworkImage("https://source.unsplash.com/500x300/?film"),
+                              image: CachedNetworkImageProvider("https://source.unsplash.com/500x300/?film"),
                               fit: BoxFit.cover,
                             ),
                           ),

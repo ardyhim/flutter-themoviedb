@@ -7,6 +7,8 @@ import 'package:hypemovies/app/modules/home/bindings/home_binding.dart';
 import 'package:hypemovies/app/modules/home/views/home_view.dart';
 import 'package:hypemovies/app/modules/list/bindings/list_binding.dart';
 import 'package:hypemovies/app/modules/list/views/list_view.dart';
+import 'package:hypemovies/app/modules/search/bindings/search_binding.dart';
+import 'package:hypemovies/app/modules/search/views/search_view.dart';
 
 part 'app_routes.dart';
 
@@ -28,6 +30,11 @@ class AppPages {
       name: _Paths.DETAIL,
       page: () => DetailView(),
       binding: DetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH,
+      page: () => SearchView(),
+      binding: SearchBinding(),
     ),
   ];
 }

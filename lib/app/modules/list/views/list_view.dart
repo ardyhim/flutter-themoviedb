@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,7 +11,6 @@ class ListView extends GetView<ListController> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2.2;
     final double itemWidth = size.width / 2;
 
@@ -21,20 +21,9 @@ class ListView extends GetView<ListController> {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
-                title: Text(lc.category.value),
+                title: Text(lc.category.value.toUpperCase()),
+                backgroundColor: Colors.redAccent,
                 centerTitle: true,
-              ),
-              SliverToBoxAdapter(
-                child: Center(
-                  child: FlatButton(
-                    onPressed: () {
-                      // print(lc.movies.value);
-                      // lc.category = "update";
-                      lc.loadMore();
-                    },
-                    child: Text("GET"),
-                  ),
-                ),
               ),
               SliverGrid(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -45,25 +34,25 @@ class ListView extends GetView<ListController> {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, int i) {
-                    return Container(
-                      width: 100,
-                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 250,
-                            decoration: BoxDecoration(
-                              color: Colors.redAccent,
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(lc.movies.value[i].thumbnailUrl),
-                                fit: BoxFit.cover,
+                    return GestureDetector(
+                      onTap: () => Get.toNamed("/detail/movie/${lc.movies.value[i].videosId}"),
+                      child: Container(
+                        width: 100,
+                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 250,
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: CachedNetworkImageProvider(lc.movies.value[i].thumbnailUrl),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () => Get.toNamed("/detail/movie/${lc.movies.value[i].videosId}"),
-                            child: Padding(
+                            Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 lc.movies.value[i].title,
@@ -76,8 +65,8 @@ class ListView extends GetView<ListController> {
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
