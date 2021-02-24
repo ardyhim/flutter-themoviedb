@@ -1,20 +1,29 @@
 import 'package:get/get.dart';
 import 'package:hypemovies/app/data/controllers/api_repository.dart';
-import 'package:hypemovies/app/data/models/movies_list_model.dart';
-import 'package:hypemovies/app/data/providers/api_provider.dart';
+import 'package:hypemovies/app/data/models/discover_movies.dart';
+import 'package:hypemovies/app/data/models/discover_tv.dart';
+import 'package:hypemovies/app/data/models/enum.dart';
+import 'package:hypemovies/app/data/models/trending_model.dart';
 
 class HomeController extends SuperController {
   HomeController({this.apiRepository});
   final ApiRepository apiRepository;
-  List<MoviesList> movies = [];
-  var moviesPopular = RxList<MoviesList>().obs;
-  final count = 0.obs;
+  var movies = new ModelDiscoverMovies().obs;
+  var tv = new ModelDiscoverTv().obs;
+  var trending = ModelTrending().obs;
+
+  fetchData() async {
+    trending.value = await apiRepository.getTrending(
+      mediaType: MediaType.ALL,
+      timeWindow: TimeWindow.DAY,
+    );
+    movies.value = await apiRepository.getDiscoverMovie();
+    tv.value = await apiRepository.getDiscoverTv();
+  }
+
   @override
   void onInit() async {
-    moviesPopular.update((val) async {
-      var data = await apiRepository.getLatestMovies();
-      val.addAll(data);
-    });
+    fetchData();
     super.onInit();
   }
 
@@ -25,21 +34,6 @@ class HomeController extends SuperController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
-
-  getM() async {
-    // moviesPopular.update((val) async {
-    //   var data = await apiRepository.getLatestMovies();
-    //   val.addAll(data);
-    // });
-    // MoviesList movie = new MoviesList(
-    //   title: "Inside Out",
-    //   thumbnailUrl: "https://source.unsplash.com/500x300/?poster",
-    // );
-    // movies.add(movie);
-    // update();
-    print("getm controler");
-  }
 
   @override
   void didChangeMetrics() {

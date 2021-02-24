@@ -1,64 +1,95 @@
 import 'package:get/get.dart';
-import 'package:hypemovies/app/data/models/movies_list_model.dart';
-// import 'package:dio/dio.dart';
+import 'package:hypemovies/app/data/models/enum.dart';
 
 class ApiProvider extends GetConnect {
-  Map<String, String> queryApi = {"api_secret_key": "aa3729572ca0be9"};
+  Map<String, String> queryApi = {"api_key": "e3759057a7b881a632632b371ca441d5"};
   @override
   void onInit() {
     print("api provider init");
-    httpClient.baseUrl = 'https://hypemovies.xyz/api';
+    httpClient.baseUrl = 'https://api.themoviedb.org/3/';
     httpClient.addRequestModifier((request) {
-      request.headers['api_secret_key'] = 'aa3729572ca0be9';
+      request.headers['api_key'] = 'e3759057a7b881a632632b371ca441d5';
       request.headers['Content-type'] = 'application/json';
       request.headers['Accept'] = 'application/json';
       return request;
     });
   }
 
-  Future<Response> getLatestMovies({int page = 1}) async {
-    httpClient.baseUrl = 'https://hypemovies.xyz/api';
+  Future<Response> getDiscoverMovie({int page = 1}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
-      "/get_latest_movies",
+      "/discover/movie",
       query: {"page": page.toString(), ...queryApi},
     );
     return res;
   }
 
-  Future<Response> getDetails({
-    String type = "movie",
-    id,
-  }) async {
-    httpClient.baseUrl = 'https://hypemovies.xyz/api';
+  Future<Response> getDiscoverTv({int page = 1}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
-      "/get_single_details",
-      query: {
-        "type": type,
-        "id": id,
-        ...queryApi,
-      },
+      "/discover/tv",
+      query: {"page": page.toString(), ...queryApi},
     );
     return res;
   }
 
-  Future<Response> getTvSeries() async {
-    httpClient.baseUrl = 'https://hypemovies.xyz/api';
+  Future<Response> getSearch({int page = 1, String query}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
-      "/get_tvseries",
-      query: queryApi,
-    );
-    return res;
-  }
-
-  Future<Response> getSearch({String keyword, page = 1}) async {
-    httpClient.baseUrl = 'https://hypemovies.xyz/api';
-    Response res = await get(
-      "/search",
+      "/search/multi",
       query: {
         "page": page.toString(),
-        "q": keyword,
+        "query": query,
         ...queryApi,
       },
+    );
+    return res;
+  }
+
+  Future<Response> getTrending({
+    MediaType mediaType = MediaType.MOVIE,
+    TimeWindow timeWindow = TimeWindow.DAY,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/trending/${mediaTypeValues.reverse[mediaType]}/${timeWindowValues.reverse[timeWindow]}",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> getDetailMovies({String id}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/movie/$id",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> getSimilarMovies({String id}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/movie/$id/similar",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> getDetailTv({String id}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/tv/$id",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> getSimilarTv({String id}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/tv/$id/similar",
+      query: {...queryApi},
     );
     return res;
   }

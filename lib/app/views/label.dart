@@ -30,22 +30,23 @@ class LabelWidgets extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: onTap,
-                child: Text(
-                  secondText,
-                  style: TextStyle(
-                    color: Colors.purple[600],
-                    fontSize: 15,
+          if (secondText != null)
+            Expanded(
+              flex: 3,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: Text(
+                    secondText,
+                    style: TextStyle(
+                      color: Colors.purple[600],
+                      fontSize: 15,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

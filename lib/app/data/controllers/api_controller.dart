@@ -10,11 +10,6 @@ class ApiController extends GetxController {
   var moviesLatest = RxList<MoviesList>().obs;
   @override
   void onInit() {
-    repository.getLatestMovies().then((value) => {print(value)});
     super.onInit();
   }
-
-  final _obj = ''.obs;
-  set obj(value) => this._obj.value = value;
-  get obj => this._obj.value;
 }

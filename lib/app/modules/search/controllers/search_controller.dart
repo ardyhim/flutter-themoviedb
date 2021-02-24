@@ -9,10 +9,10 @@ class SearchController extends GetxController with StateMixin<MoviesSearch> {
   @override
   void onInit() async {
     change(MoviesSearch(), status: RxStatus.loading());
-    search.value = await apiRepository.getSearch(
-      keyword: Get.parameters["keyword"],
-      page: Get.parameters["page"],
-    );
+    // search.value = await apiRepository.getSearch(
+    //   keyword: Get.parameters["keyword"],
+    //   page: Get.parameters["page"],
+    // );
     change(search.value, status: RxStatus.success());
     super.onInit();
   }

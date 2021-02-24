@@ -20,11 +20,11 @@ class ListController extends GetxController {
     list.update((val) {
       val.addAll([1, 2, 3, 4, 5]);
     });
-    movies.update((val) async {
-      var data = await apiRepository.getLatestMovies();
-      val.addAll(data);
-      update();
-    });
+    // movies.update((val) async {
+    //   var data = await apiRepository.getLatestMovies();
+    //   val.addAll(data);
+    //   update();
+    // });
   }
 
   @override

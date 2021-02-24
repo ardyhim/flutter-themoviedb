@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 import 'package:hypemovies/app/modules/detail/bindings/detail_binding.dart';
-import 'package:hypemovies/app/modules/detail/views/cast_view.dart';
 import 'package:hypemovies/app/modules/detail/views/detail_view.dart';
 import 'package:hypemovies/app/modules/home/bindings/home_binding.dart';
 import 'package:hypemovies/app/modules/home/views/home_view.dart';

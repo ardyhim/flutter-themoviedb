@@ -2,13 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hypemovies/app/data/models/enum.dart';
 import 'package:hypemovies/app/views/button_widgets.dart';
 import 'package:hypemovies/app/views/label.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  HomeController hc = Get.find<HomeController>();
+  // HomeController hc = Get.find<HomeController>();
   TextEditingController _searchController = new TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
@@ -100,7 +101,7 @@ class HomeView extends GetView<HomeController> {
                                     vertical: 10,
                                   ),
                                   onTap: () {
-                                    Get.find<HomeController>().getM();
+                                    // Get.find<HomeController>().getM();
                                   },
                                   text: 'Movies',
                                 ),
@@ -161,11 +162,9 @@ class HomeView extends GetView<HomeController> {
           ),
           SliverToBoxAdapter(
             child: LabelWidgets(
-              firstText: "Most Popular",
-              secondText: "View All",
-              onTap: () {
-                Get.toNamed("/list/popular");
-              },
+              firstText: "Trending",
+              secondText: null,
+              onTap: () {},
             ),
           ),
           SliverToBoxAdapter(
@@ -176,12 +175,13 @@ class HomeView extends GetView<HomeController> {
                 init: Get.find(),
                 builder: (val) {
                   return ListView.builder(
-                    itemCount: val.moviesPopular == null ? 0 : val.moviesPopular.value.length,
+                    itemCount: val.trending.value.results == null ? 0 : val.trending.value.results.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, int i) {
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed("/detail/movie/${val.moviesPopular.value[i].videosId}");
+                          String route = "/detail/${mediaTypeValues.reverse[val.trending.value.results[i].mediaType]}/${val.trending.value.results[i].id}";
+                          Get.toNamed(route);
                         },
                         child: Container(
                           width: 100,
@@ -194,7 +194,7 @@ class HomeView extends GetView<HomeController> {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider(val.moviesPopular.value[i].thumbnailUrl),
+                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.trending.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -202,7 +202,7 @@ class HomeView extends GetView<HomeController> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Text(
-                                  "${val.moviesPopular.value[i].title}",
+                                  val.trending.value.results[i].title == null ? val.trending.value.results[i].name : val.trending.value.results[i].title,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
@@ -224,50 +224,64 @@ class HomeView extends GetView<HomeController> {
           ),
           SliverToBoxAdapter(
             child: LabelWidgets(
-              firstText: "Now Playing",
+              firstText: "Discover Movies",
               secondText: "View All",
-              onTap: () {},
+              onTap: () {
+                // Get.toNamed("/list/popular");
+                // hc.fetchData();
+                // print(hc.movies.value);
+              },
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
               height: 200,
               width: size.width,
-              child: ListView.builder(
-                itemCount: hc.movies.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, int i) {
-                  return Container(
-                    width: 200,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 140,
-                          decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider("https://source.unsplash.com/500x300/?movies"),
-                              fit: BoxFit.cover,
-                            ),
+              child: GetX<HomeController>(
+                init: Get.find(),
+                builder: (val) {
+                  return ListView.builder(
+                    itemCount: val.movies.value.results == null ? 0 : val.movies.value.results.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, int i) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed("/detail/movie/${val.movies.value.results[i].id}");
+                        },
+                        child: Container(
+                          width: 100,
+                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 140,
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.movies.value.results[i].posterPath}"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  "${val.movies.value.results[i].title}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            "Title Movies Abc ${hc.movies[i].title}",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
               ),
@@ -275,7 +289,7 @@ class HomeView extends GetView<HomeController> {
           ),
           SliverToBoxAdapter(
             child: LabelWidgets(
-              firstText: "Top Rated",
+              firstText: "Discover Tv",
               secondText: "View All",
               onTap: () {},
             ),
@@ -284,39 +298,51 @@ class HomeView extends GetView<HomeController> {
             child: Container(
               height: 200,
               width: size.width,
-              child: ListView.builder(
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, int i) {
-                  return Container(
-                    width: 100,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 140,
-                          decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider("https://source.unsplash.com/500x300/?film"),
-                              fit: BoxFit.cover,
-                            ),
+              child: GetX<HomeController>(
+                init: Get.find(),
+                builder: (val) {
+                  return ListView.builder(
+                    itemCount: val.tv.value.results == null ? 0 : val.tv.value.results.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, int i) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed("/detail/tv/${val.tv.value.results[i].id}");
+                        },
+                        child: Container(
+                          width: 100,
+                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 140,
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.tv.value.results[i].posterPath}"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  "${val.tv.value.results[i].name}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            "Title Movies Abc $i",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
               ),
