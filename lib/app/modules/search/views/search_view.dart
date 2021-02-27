@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../controllers/search_controller.dart';
 
+// ignore: must_be_immutable
 class SearchView extends GetView<SearchController> {
   var controller = Get.find();
 

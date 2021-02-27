@@ -8,6 +8,7 @@ import 'package:hypemovies/app/views/label.dart';
 
 import '../controllers/home_controller.dart';
 
+// ignore: must_be_immutable
 class HomeView extends GetView<HomeController> {
   // HomeController hc = Get.find<HomeController>();
   TextEditingController _searchController = new TextEditingController(text: "");
@@ -15,10 +16,6 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     Size size = context.mediaQuery.size;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('HomeView'),
-      //   centerTitle: true,
-      // ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -91,66 +88,102 @@ class HomeView extends GetView<HomeController> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
+                            margin: EdgeInsets.only(bottom: 10, right: 20, left: 20),
+                            height: 100,
+                            child: Row(
                               children: [
-                                CustomButton(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 10,
+                                Expanded(
+                                  child: CustomButton(
+                                    height: 100,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 40,
+                                      vertical: 10,
+                                    ),
+                                    onTap: () {
+                                      Get.toNamed("/list/movie${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}");
+                                    },
+                                    text: 'Movies',
                                   ),
-                                  onTap: () {
-                                    // Get.find<HomeController>().getM();
-                                  },
-                                  text: 'Movies',
                                 ),
-                                CustomButton(
-                                  firstColor: Colors.yellow,
-                                  secondColor: Colors.orangeAccent,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 10,
+                                Expanded(
+                                  child: CustomButton(
+                                    height: 100,
+                                    firstColor: Colors.yellow,
+                                    secondColor: Colors.orangeAccent,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 40,
+                                      vertical: 10,
+                                    ),
+                                    onTap: () {
+                                      Get.toNamed("/list/tv${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}");
+                                    },
+                                    text: 'Tv Series',
                                   ),
-                                  onTap: () {},
-                                  text: 'Tv Series',
-                                ),
-                                CustomButton(
-                                  firstColor: Colors.orangeAccent,
-                                  secondColor: Colors.red,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 10,
-                                  ),
-                                  onTap: () {},
-                                  text: 'Live',
-                                ),
-                                CustomButton(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 10,
-                                  ),
-                                  onTap: () {},
-                                  text: 'Action',
-                                ),
-                                CustomButton(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 10,
-                                  ),
-                                  onTap: () {},
-                                  text: 'Drama',
-                                ),
-                                CustomButton(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 10,
-                                  ),
-                                  onTap: () {},
-                                  text: 'Documentary',
                                 ),
                               ],
                             ),
+                            // child: ListView(
+                            //   scrollDirection: Axis.horizontal,
+                            //   shrinkWrap: true,
+                            //   children: [
+                            //     CustomButton(
+                            //       padding: EdgeInsets.symmetric(
+                            //         horizontal: 40,
+                            //         vertical: 10,
+                            //       ),
+                            //       onTap: () {
+                            //         Get.toNamed("/list/movie");
+                            //       },
+                            //       text: 'Movies',
+                            //     ),
+                            //     CustomButton(
+                            //       firstColor: Colors.yellow,
+                            //       secondColor: Colors.orangeAccent,
+                            //       padding: EdgeInsets.symmetric(
+                            //         horizontal: 40,
+                            //         vertical: 10,
+                            //       ),
+                            //       onTap: () {
+                            //         Get.toNamed("/list/tv");
+                            //       },
+                            //       text: 'Tv Series',
+                            //     ),
+                            //     // CustomButton(
+                            //     //   firstColor: Colors.orangeAccent,
+                            //     //   secondColor: Colors.red,
+                            //     //   padding: EdgeInsets.symmetric(
+                            //     //     horizontal: 40,
+                            //     //     vertical: 10,
+                            //     //   ),
+                            //     //   onTap: () {},
+                            //     //   text: 'Live',
+                            //     // ),
+                            //     // CustomButton(
+                            //     //   padding: EdgeInsets.symmetric(
+                            //     //     horizontal: 40,
+                            //     //     vertical: 10,
+                            //     //   ),
+                            //     //   onTap: () {},
+                            //     //   text: 'Action',
+                            //     // ),
+                            //     // CustomButton(
+                            //     //   padding: EdgeInsets.symmetric(
+                            //     //     horizontal: 40,
+                            //     //     vertical: 10,
+                            //     //   ),
+                            //     //   onTap: () {},
+                            //     //   text: 'Drama',
+                            //     // ),
+                            //     // CustomButton(
+                            //     //   padding: EdgeInsets.symmetric(
+                            //     //     horizontal: 40,
+                            //     //     vertical: 10,
+                            //     //   ),
+                            //     //   onTap: () {},
+                            //     //   text: 'Documentary',
+                            //     // ),
+                            //   ],
+                            // ),
                           ),
                         ),
                       ],
@@ -227,9 +260,7 @@ class HomeView extends GetView<HomeController> {
               firstText: "Discover Movies",
               secondText: "View All",
               onTap: () {
-                // Get.toNamed("/list/popular");
-                // hc.fetchData();
-                // print(hc.movies.value);
+                Get.toNamed("/list/movie/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
               },
             ),
           ),
@@ -291,7 +322,9 @@ class HomeView extends GetView<HomeController> {
             child: LabelWidgets(
               firstText: "Discover Tv",
               secondText: "View All",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+              },
             ),
           ),
           SliverToBoxAdapter(

@@ -7,6 +7,7 @@ import 'package:hypemovies/app/views/clipper.dart';
 import 'package:get/get.dart';
 import 'package:hypemovies/app/views/label.dart';
 
+// ignore: must_be_immutable
 class DetailTvView extends GetView {
   var controller = Get.find<DetailController>();
   @override

@@ -1,25 +1,23 @@
-import 'dart:convert';
-
-import 'package:get/get.dart';
 import 'package:hypemovies/app/data/models/detail_movies.dart';
 import 'package:hypemovies/app/data/models/detail_tv.dart';
 import 'package:hypemovies/app/data/models/discover_movies.dart';
 import 'package:hypemovies/app/data/models/discover_tv.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
-import 'package:hypemovies/app/data/models/movies_detail_model.dart';
 import 'package:hypemovies/app/data/models/search_model.dart';
 import 'package:hypemovies/app/data/models/similar_movies.dart';
 import 'package:hypemovies/app/data/models/similar_tv.dart';
 import 'package:hypemovies/app/data/models/trending_model.dart';
 import 'package:hypemovies/app/data/providers/api_provider.dart';
-import 'package:meta/meta.dart';
 
 class ApiRepository {
   ApiRepository({this.provider});
   final ApiProvider provider;
 
-  Future<ModelDiscoverMovies> getDiscoverMovie() async {
-    final res = await provider.getDiscoverMovie();
+  Future<ModelDiscoverMovies> getDiscoverMovie({
+    int page = 1,
+    SortBy sortBy = SortBy.POPULARITY_DECS,
+  }) async {
+    final res = await provider.getDiscoverMovie(page: page, sortBy: sortBy);
     if (res.status.hasError) {
       return Future.error(res.statusText);
     } else {
@@ -29,8 +27,11 @@ class ApiRepository {
     }
   }
 
-  Future<ModelDiscoverTv> getDiscoverTv() async {
-    final res = await provider.getDiscoverTv();
+  Future<ModelDiscoverTv> getDiscoverTv({
+    int page = 1,
+    SortBy sortBy = SortBy.POPULARITY_DECS,
+  }) async {
+    final res = await provider.getDiscoverTv(page: page, sortBy: sortBy);
     if (res.status.hasError) {
       return Future.error(res.statusText);
     } else {

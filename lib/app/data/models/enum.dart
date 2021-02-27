@@ -11,6 +11,39 @@ final mediaTypeValues = EnumValues({
   "person": MediaType.PERSON,
 });
 
+enum SortBy {
+  POPULARITY_DECS,
+  POPULARITY_ASC,
+  RELEASE_DATE_DESC,
+  RELEASE_DATE_ASC,
+  REVENUE_DESC,
+  REVENUE_ASC,
+  PRIMARY_RELEASE_DATE_DESC,
+  PRIMARY_RELEASE_DATE_ASC,
+  ORIGINAL_TITLE_DESC,
+  ORIGINAL_TITLE_ASC,
+  VOTE_AVERAGE_DESC,
+  VOTE_AVERAGE_ASC,
+  VOTE_COUNT_DESC,
+  VOTE_COUNT_ASC,
+}
+final sortByValues = EnumValues({
+  "popularity.desc": SortBy.POPULARITY_DECS,
+  "popularity.asc": SortBy.POPULARITY_ASC,
+  "release_date.desc": SortBy.RELEASE_DATE_DESC,
+  "release_date.asc": SortBy.RELEASE_DATE_ASC,
+  "revenue.desc": SortBy.REVENUE_DESC,
+  "revenue.asc": SortBy.REVENUE_ASC,
+  "primary_release_date.desc": SortBy.PRIMARY_RELEASE_DATE_DESC,
+  "primary_release_date.asc": SortBy.PRIMARY_RELEASE_DATE_ASC,
+  "original_title.desc": SortBy.ORIGINAL_TITLE_DESC,
+  "original_title.asc": SortBy.ORIGINAL_TITLE_ASC,
+  "vote_average.desc": SortBy.VOTE_AVERAGE_DESC,
+  "vote_average.asc": SortBy.VOTE_AVERAGE_ASC,
+  "vote_count.desc": SortBy.VOTE_COUNT_DESC,
+  "vote_count.asc": SortBy.VOTE_COUNT_ASC,
+});
+
 enum OriginCountry { US, ES, CA, MX }
 
 final originCountryValues = EnumValues({"CA": OriginCountry.CA, "ES": OriginCountry.ES, "MX": OriginCountry.MX, "US": OriginCountry.US});

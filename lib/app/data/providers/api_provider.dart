@@ -15,20 +15,34 @@ class ApiProvider extends GetConnect {
     });
   }
 
-  Future<Response> getDiscoverMovie({int page = 1}) async {
+  Future<Response> getDiscoverMovie({
+    int page = 1,
+    SortBy sortBy = SortBy.POPULARITY_DECS,
+  }) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/discover/movie",
-      query: {"page": page.toString(), ...queryApi},
+      query: {
+        "sortBy": sortByValues.reverse[sortBy],
+        "page": page.toString(),
+        ...queryApi,
+      },
     );
     return res;
   }
 
-  Future<Response> getDiscoverTv({int page = 1}) async {
+  Future<Response> getDiscoverTv({
+    int page = 1,
+    SortBy sortBy = SortBy.POPULARITY_DECS,
+  }) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/discover/tv",
-      query: {"page": page.toString(), ...queryApi},
+      query: {
+        "sortBy": sortByValues.reverse[sortBy],
+        "page": page.toString(),
+        ...queryApi,
+      },
     );
     return res;
   }

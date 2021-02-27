@@ -17,7 +17,7 @@ class DetailController extends GetxController with StateMixin {
 
   fetchData() async {
     change("detail", status: RxStatus.loading());
-    if (mediaType == MediaType.MOVIE) {
+    if (identical(mediaType, MediaType.MOVIE)) {
       movies.value = await apiRepository.getDetailMovies(id: Get.parameters["id"]);
       similarMovies.value = await apiRepository.getSimilarMovies(id: Get.parameters["id"]);
       change(movies.value, status: RxStatus.success());

@@ -6,6 +6,7 @@ import 'package:hypemovies/app/views/clipper.dart';
 
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class DetailMovieView extends GetView {
   var controller = Get.find<DetailController>();
   @override

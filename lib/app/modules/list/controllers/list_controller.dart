@@ -1,35 +1,52 @@
 import 'package:get/get.dart';
 import 'package:hypemovies/app/data/controllers/api_repository.dart';
-import 'package:hypemovies/app/data/models/movies_list_model.dart';
+import 'package:hypemovies/app/data/models/discover_movies.dart';
+import 'package:hypemovies/app/data/models/discover_tv.dart';
+import 'package:hypemovies/app/data/models/enum.dart';
 
 class ListController extends GetxController {
   ListController({this.apiRepository});
   final ApiRepository apiRepository;
-  var movies = RxList<MoviesList>().obs;
-  RxString _category = Get.parameters["category"].obs;
+  var mediaType = mediaTypeValues.map[Get.parameters["category"]].obs;
+  var sortBy = sortByValues.map[Get.parameters["sortBy"]].obs;
+  var movies = new ModelDiscoverMovies().obs;
+  var tv = new ModelDiscoverTv().obs;
+  var page = 1.obs;
+  var isMore = true.obs;
+  var isLoading = true.obs;
 
-  var list = RxList().obs;
-
-  get category => _category;
-  set category(value) {
-    _category.value = value;
-    update();
-  }
-
-  loadMore() async {
-    list.update((val) {
-      val.addAll([1, 2, 3, 4, 5]);
-    });
-    // movies.update((val) async {
-    //   var data = await apiRepository.getLatestMovies();
-    //   val.addAll(data);
-    //   update();
-    // });
+  fetchData() async {
+    isLoading.value = true;
+    if (identical(mediaType.value, MediaType.TV)) {
+      ModelDiscoverTv data = await apiRepository.getDiscoverTv(
+        sortBy: sortBy.value,
+        page: page.value,
+      );
+      if (tv.value.results == null) {
+        tv.value = data;
+      } else {
+        tv.value.results.addAll(data.results);
+      }
+      if (data.results.length < 20) isMore.value = false;
+      isLoading.value = false;
+    } else {
+      ModelDiscoverMovies data = await apiRepository.getDiscoverMovie(
+        sortBy: sortBy.value,
+        page: page.value,
+      );
+      if (movies.value.results == null) {
+        movies.value = data;
+      } else {
+        movies.value.results.addAll(data.results);
+      }
+      if (data.results.length < 20) isMore.value = false;
+      isLoading.value = false;
+    }
   }
 
   @override
   void onInit() async {
-    loadMore();
+    fetchData();
     super.onInit();
   }
 

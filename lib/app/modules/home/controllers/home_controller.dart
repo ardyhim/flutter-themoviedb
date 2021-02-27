@@ -32,8 +32,8 @@ class HomeController extends SuperController {
     super.onReady();
   }
 
-  @override
-  void onClose() {}
+  // @override
+  // void onClose() {}
 
   @override
   void didChangeMetrics() {
