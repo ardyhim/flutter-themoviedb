@@ -62,7 +62,9 @@ class ListView extends GetView<ListController> {
                                     color: Colors.redAccent,
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${lc.movies.value.results[i].posterPath}"),
+                                      image: lc.movies.value.results[i].posterPath == null
+                                          ? AssetImage("assets/images/not-found.png")
+                                          : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${lc.movies.value.results[i].posterPath}"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -99,7 +101,7 @@ class ListView extends GetView<ListController> {
                     delegate: SliverChildBuilderDelegate(
                       (context, int i) {
                         return GestureDetector(
-                          onTap: () => Get.toNamed("/detail/movie/${lc.tv.value.results[i].id}"),
+                          onTap: () => Get.toNamed("/detail/tv/${lc.tv.value.results[i].id}"),
                           child: Container(
                             width: 100,
                             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

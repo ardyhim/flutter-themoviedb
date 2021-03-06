@@ -160,7 +160,9 @@ class HomeView extends GetView<HomeController> {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.trending.value.results[i].posterPath}"),
+                                    image: val.trending.value.results[i].posterPath == null
+                                        ? AssetImage("/assets/images/not-found.png")
+                                        : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.trending.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -223,7 +225,9 @@ class HomeView extends GetView<HomeController> {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.movies.value.results[i].posterPath}"),
+                                    image: val.movies.value.results[i].posterPath == null
+                                        ? AssetImage("/assets/images/not-found.png")
+                                        : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.movies.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -286,7 +290,9 @@ class HomeView extends GetView<HomeController> {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.tv.value.results[i].posterPath}"),
+                                    image: val.tv.value.results[i].posterPath == null
+                                        ? AssetImage("/assets/images/not-found.png")
+                                        : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.tv.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

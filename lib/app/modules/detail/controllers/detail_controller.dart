@@ -31,7 +31,6 @@ class DetailController extends GetxController with StateMixin {
     } else {
       tv.value = await apiRepository.getDetailTv(id: Get.parameters["id"]);
       videosTv.value = await apiRepository.getVideosTv(id: Get.parameters["id"]);
-      print(videosTv.value);
       similarTv.value = await apiRepository.getSimilarTv(id: Get.parameters["id"]);
       change(tv.value, status: RxStatus.success());
     }
