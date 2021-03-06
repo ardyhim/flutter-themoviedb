@@ -10,7 +10,6 @@ import '../controllers/home_controller.dart';
 
 // ignore: must_be_immutable
 class HomeView extends GetView<HomeController> {
-  // HomeController hc = Get.find<HomeController>();
   TextEditingController _searchController = new TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,7 @@ class HomeView extends GetView<HomeController> {
                                 controller: _searchController,
                                 keyboardType: TextInputType.text,
                                 onSubmitted: (v) {
-                                  Get.toNamed("/search/${_searchController.text}/1");
+                                  if (_searchController.text != "") Get.toNamed("/search/${_searchController.text}");
                                 },
                                 decoration: InputDecoration(
                                   hintText: "Search for movies,tv show...",
@@ -64,7 +63,7 @@ class HomeView extends GetView<HomeController> {
                                     color: Colors.redAccent,
                                     icon: Icon(Icons.search),
                                     onPressed: () {
-                                      Get.toNamed("/search/${_searchController.text}/1");
+                                      if (_searchController.text != "") Get.toNamed("/search/${_searchController.text}");
                                     },
                                   ),
                                   enabledBorder: OutlineInputBorder(
@@ -99,10 +98,8 @@ class HomeView extends GetView<HomeController> {
                                       horizontal: 40,
                                       vertical: 10,
                                     ),
-                                    onTap: () {
-                                      Get.toNamed("/list/movie${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}");
-                                    },
                                     text: 'Movies',
+                                    onTap: () => Get.toNamed("/list/movie/${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}"),
                                   ),
                                 ),
                                 Expanded(
@@ -114,76 +111,12 @@ class HomeView extends GetView<HomeController> {
                                       horizontal: 40,
                                       vertical: 10,
                                     ),
-                                    onTap: () {
-                                      Get.toNamed("/list/tv${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}");
-                                    },
                                     text: 'Tv Series',
+                                    onTap: () => Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}"),
                                   ),
                                 ),
                               ],
                             ),
-                            // child: ListView(
-                            //   scrollDirection: Axis.horizontal,
-                            //   shrinkWrap: true,
-                            //   children: [
-                            //     CustomButton(
-                            //       padding: EdgeInsets.symmetric(
-                            //         horizontal: 40,
-                            //         vertical: 10,
-                            //       ),
-                            //       onTap: () {
-                            //         Get.toNamed("/list/movie");
-                            //       },
-                            //       text: 'Movies',
-                            //     ),
-                            //     CustomButton(
-                            //       firstColor: Colors.yellow,
-                            //       secondColor: Colors.orangeAccent,
-                            //       padding: EdgeInsets.symmetric(
-                            //         horizontal: 40,
-                            //         vertical: 10,
-                            //       ),
-                            //       onTap: () {
-                            //         Get.toNamed("/list/tv");
-                            //       },
-                            //       text: 'Tv Series',
-                            //     ),
-                            //     // CustomButton(
-                            //     //   firstColor: Colors.orangeAccent,
-                            //     //   secondColor: Colors.red,
-                            //     //   padding: EdgeInsets.symmetric(
-                            //     //     horizontal: 40,
-                            //     //     vertical: 10,
-                            //     //   ),
-                            //     //   onTap: () {},
-                            //     //   text: 'Live',
-                            //     // ),
-                            //     // CustomButton(
-                            //     //   padding: EdgeInsets.symmetric(
-                            //     //     horizontal: 40,
-                            //     //     vertical: 10,
-                            //     //   ),
-                            //     //   onTap: () {},
-                            //     //   text: 'Action',
-                            //     // ),
-                            //     // CustomButton(
-                            //     //   padding: EdgeInsets.symmetric(
-                            //     //     horizontal: 40,
-                            //     //     vertical: 10,
-                            //     //   ),
-                            //     //   onTap: () {},
-                            //     //   text: 'Drama',
-                            //     // ),
-                            //     // CustomButton(
-                            //     //   padding: EdgeInsets.symmetric(
-                            //     //     horizontal: 40,
-                            //     //     vertical: 10,
-                            //     //   ),
-                            //     //   onTap: () {},
-                            //     //   text: 'Documentary',
-                            //     // ),
-                            //   ],
-                            // ),
                           ),
                         ),
                       ],

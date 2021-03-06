@@ -3,12 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:hypemovies/app/modules/detail/controllers/detail_controller.dart';
 import 'package:hypemovies/app/views/button_widgets.dart';
 import 'package:hypemovies/app/views/clipper.dart';
-
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class DetailMovieView extends GetView {
-  var controller = Get.find<DetailController>();
+  DetailController controller = Get.find<DetailController>();
   @override
   Widget build(BuildContext context) {
     Size size = context.mediaQuery.size;
@@ -37,14 +36,6 @@ class DetailMovieView extends GetView {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        // gradient: LinearGradient(
-                        //   begin: Alignment.topRight,
-                        //   end: Alignment.bottomLeft,
-                        //   colors: [
-                        //     Color(0xFF3383CD),
-                        //     Color(0xFF11249F),
-                        //   ],
-                        // ),
                       ),
                     ),
                   ),
@@ -101,18 +92,13 @@ class DetailMovieView extends GetView {
             child: Container(
               width: size.width,
               height: 50,
-              // margin: EdgeInsets.symmetric(horizontal: 20),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: controller.movies.value.genres.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, int i) {
                   return Container(
-                    margin: i == 0
-                        ? EdgeInsets.only(right: 5, left: 20)
-                        : EdgeInsets.symmetric(
-                            horizontal: 5,
-                          ),
+                    margin: i == 0 ? EdgeInsets.only(right: 5, left: 20) : EdgeInsets.symmetric(horizontal: 5),
                     child: Chip(
                       backgroundColor: Colors.redAccent,
                       elevation: 1,
@@ -147,12 +133,6 @@ class DetailMovieView extends GetView {
                     flex: 1,
                     child: Align(
                       alignment: Alignment.centerRight,
-                      // child: Text(
-                      //   controller.movies.value.runtime.toString(),
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      //   style: Theme.of(context).textTheme.subtitle1,
-                      // ),
                       child: CustomButton(
                         height: 40,
                         elevation: 1,
@@ -190,11 +170,11 @@ class DetailMovieView extends GetView {
               width: size.width,
               child: TabBar(
                 labelColor: Colors.black87,
-                indicatorColor: Colors.orangeAccent,
+                indicatorColor: Colors.redAccent,
                 labelStyle: Theme.of(context).textTheme.subtitle2,
                 tabs: [
                   Tab(text: "Related"),
-                  Tab(text: "Cast"),
+                  Tab(text: "Videos"),
                 ],
               ),
             ),
@@ -245,47 +225,65 @@ class DetailMovieView extends GetView {
                       },
                     ),
                   ),
-                  Container(),
-                  // Container(
-                  //   child: ListView.builder(
-                  //     itemCount: movie.cast.length,
-                  //     scrollDirection: Axis.horizontal,
-                  //     itemBuilder: (context, int i) {
-                  //       return Container(
-                  //         width: 100,
-                  //         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  //         child: Column(
-                  //           children: [
-                  //             Container(
-                  //               height: 150,
-                  //               decoration: BoxDecoration(
-                  //                 color: Colors.redAccent,
-                  //                 borderRadius: BorderRadius.circular(10),
-                  //                 image: DecorationImage(
-                  //                   image: CachedNetworkImageProvider(movie.cast[i].imageUrl),
-                  //                   fit: BoxFit.cover,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  //               child: Text(
-                  //                 movie.cast[i].name,
-                  //                 maxLines: 2,
-                  //                 overflow: TextOverflow.ellipsis,
-                  //                 textAlign: TextAlign.center,
-                  //                 style: TextStyle(
-                  //                   color: Colors.black,
-                  //                   fontWeight: FontWeight.bold,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+                  Container(
+                    child: ListView.builder(
+                      itemCount: controller.videosMovies.value.results == null ? 0 : controller.videosMovies.value.results.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, int i) {
+                        return Container(
+                          width: 320,
+                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: CachedNetworkImageProvider(
+                                      "https://img.youtube.com/vi/${controller.videosMovies.value.results[i].key}/mqdefault.jpg",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              MaterialButton(
+                                padding: EdgeInsets.all(10),
+                                shape: CircleBorder(),
+                                color: Colors.transparent,
+                                onPressed: () => controller.launchUrl(key: controller.videosMovies.value.results[i].key),
+                                child: Icon(
+                                  Icons.play_arrow_rounded,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 10,
+                                child: Container(
+                                  width: 320,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Text(
+                                      controller.videosMovies.value.results[i].name,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.headline4.copyWith(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),

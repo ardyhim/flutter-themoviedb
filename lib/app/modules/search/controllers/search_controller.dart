@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
 import 'package:hypemovies/app/data/controllers/api_repository.dart';
-import 'package:hypemovies/app/data/models/movies_search_model.dart';
+import 'package:hypemovies/app/data/models/search_model.dart';
 
-class SearchController extends GetxController with StateMixin<MoviesSearch> {
+class SearchController extends GetxController with StateMixin<ModelSearch> {
   SearchController({this.apiRepository});
   final ApiRepository apiRepository;
-  var search = MoviesSearch().obs;
+  var search = ModelSearch().obs;
+  var page = 1.obs;
   @override
   void onInit() async {
-    change(MoviesSearch(), status: RxStatus.loading());
-    // search.value = await apiRepository.getSearch(
-    //   keyword: Get.parameters["keyword"],
-    //   page: Get.parameters["page"],
-    // );
+    change(ModelSearch(), status: RxStatus.loading());
+    search.value = await apiRepository.getSearch(
+      query: Get.parameters["keyword"],
+      page: page.value,
+    );
     change(search.value, status: RxStatus.success());
     super.onInit();
   }

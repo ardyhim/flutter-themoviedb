@@ -2,12 +2,30 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hypemovies/app/data/models/enum.dart';
+import 'package:hypemovies/app/data/models/search_model.dart';
 
 import '../controllers/search_controller.dart';
 
 // ignore: must_be_immutable
 class SearchView extends GetView<SearchController> {
   var controller = Get.find();
+
+  String title(ModelSearchResult data) {
+    switch (data.mediaType) {
+      case MediaType.MOVIE:
+        return data.title;
+        break;
+      case MediaType.TV:
+        return data.name;
+        break;
+      case MediaType.PERSON:
+        return data.name;
+        break;
+      default:
+        return data.name;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +51,13 @@ class SearchView extends GetView<SearchController> {
               delegate: SliverChildBuilderDelegate(
                 (context, int i) {
                   return GestureDetector(
-                    onTap: () => Get.toNamed("/detail/movie/${search.movie[i].videosId}"),
+                    onTap: () {
+                      if (search.results[i].mediaType == MediaType.MOVIE) {
+                        Get.toNamed("/detail/movie/${search.results[i].id}");
+                      } else if (search.results[i].mediaType == MediaType.TV) {
+                        Get.toNamed("/detail/tv/${search.results[i].id}");
+                      }
+                    },
                     child: Container(
                       width: 100,
                       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -45,8 +69,9 @@ class SearchView extends GetView<SearchController> {
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
-                                image: CachedNetworkImageProvider(search.movie[i].thumbnailUrl),
-                                // image: NetworkImage(search.movie[i].thumbnailUrl),
+                                image: search.results[i].posterPath == null
+                                    ? AssetImage("assets/images/person.jpg")
+                                    : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${search.results[i].posterPath}"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -54,7 +79,7 @@ class SearchView extends GetView<SearchController> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
-                              search.movie[i].title,
+                              title(search.results[i]),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.center,
@@ -69,7 +94,7 @@ class SearchView extends GetView<SearchController> {
                     ),
                   );
                 },
-                childCount: search.movie.length,
+                childCount: search.results.length,
               ),
             ),
           ],

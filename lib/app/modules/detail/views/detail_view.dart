@@ -15,7 +15,7 @@ class DetailView extends GetView<DetailController> {
     return Scaffold(
       body: controller.obx(
         (movie) {
-          if (identical(controller.mediaType, MediaType.MOVIE))
+          if (identical(controller.mediaType.value, MediaType.MOVIE))
             return DetailMovieView();
           else
             return DetailTvView();

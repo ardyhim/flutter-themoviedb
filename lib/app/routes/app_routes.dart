@@ -12,5 +12,5 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LIST = '/list/:category/:sortBy';
   static const DETAIL = '/detail/:type/:id';
-  static const SEARCH = '/search/:keyword/:page';
+  static const SEARCH = '/search/:keyword';
 }

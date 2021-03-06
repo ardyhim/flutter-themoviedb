@@ -7,6 +7,7 @@ import 'package:hypemovies/app/data/models/search_model.dart';
 import 'package:hypemovies/app/data/models/similar_movies.dart';
 import 'package:hypemovies/app/data/models/similar_tv.dart';
 import 'package:hypemovies/app/data/models/trending_model.dart';
+import 'package:hypemovies/app/data/models/videos.dart';
 import 'package:hypemovies/app/data/providers/api_provider.dart';
 
 class ApiRepository {
@@ -88,6 +89,17 @@ class ApiRepository {
     }
   }
 
+  Future<ModelVideos> getVideosMovies({String id}) async {
+    final res = await provider.getVideosMovies(id: id);
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelVideos videos;
+      videos = new ModelVideos.fromJson(res.body);
+      return videos;
+    }
+  }
+
   Future<ModelTv> getDetailTv({String id}) async {
     final res = await provider.getDetailTv(id: id);
     if (res.status.hasError) {
@@ -107,6 +119,17 @@ class ApiRepository {
       ModelSimilarTv tv;
       tv = new ModelSimilarTv.fromJson(res.body);
       return tv;
+    }
+  }
+
+  Future<ModelVideos> getVideosTv({String id}) async {
+    final res = await provider.getVideosTv(id: id);
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelVideos videos;
+      videos = new ModelVideos.fromJson(res.body);
+      return videos;
     }
   }
 }

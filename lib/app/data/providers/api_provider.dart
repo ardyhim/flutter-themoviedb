@@ -90,6 +90,15 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> getVideosMovies({String id}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/movie/$id/videos",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
   Future<Response> getDetailTv({String id}) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
@@ -103,6 +112,15 @@ class ApiProvider extends GetConnect {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/tv/$id/similar",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> getVideosTv({String id}) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/tv/$id/videos",
       query: {...queryApi},
     );
     return res;

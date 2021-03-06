@@ -8,7 +8,6 @@ import '../controllers/list_controller.dart';
 
 // ignore: must_be_immutable
 class ListView extends GetView<ListController> {
-  // ListController lc = Get.find<ListController>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -24,13 +23,12 @@ class ListView extends GetView<ListController> {
           return NotificationListener(
             onNotification: (ScrollNotification scrollInfo) {
               if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-                print(scrollInfo.metrics.pixels);
-                print(scrollInfo.metrics.maxScrollExtent);
                 if (lc.isMore.value && !lc.isLoading.value) {
                   lc.page.value++;
                   lc.fetchData();
                 }
               }
+              return true;
             },
             child: CustomScrollView(
               controller: scrollController,
@@ -38,7 +36,6 @@ class ListView extends GetView<ListController> {
               slivers: [
                 SliverAppBar(
                   title: Text(mediaTypeValues.reverse[lc.mediaType.value].toString().toUpperCase()),
-                  // title: lc.movies.value.results == null ? Text("null") : Text(lc.movies.value.results.length.toString()),
                   backgroundColor: Colors.redAccent,
                   centerTitle: true,
                 ),
