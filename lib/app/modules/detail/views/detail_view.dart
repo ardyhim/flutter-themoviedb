@@ -20,6 +20,11 @@ class DetailView extends GetView<DetailController> {
           else
             return DetailTvView();
         },
+        onLoading: Center(
+          child: CircularProgressIndicator(
+              // backgroundColor: Colors.redAccent,
+              ),
+        ),
       ),
     );
   }

@@ -1,8 +1,21 @@
+import 'package:hive/hive.dart';
+part 'enum.g.dart';
+
 enum TimeWindow { WEEK, DAY }
 
 final timeWindowValues = EnumValues({"week": TimeWindow.WEEK, "day": TimeWindow.DAY});
 
-enum MediaType { MOVIE, TV, ALL, PERSON }
+@HiveType(typeId: 2)
+enum MediaType {
+  @HiveField(0)
+  MOVIE,
+  @HiveField(1)
+  TV,
+  @HiveField(2)
+  ALL,
+  @HiveField(3)
+  PERSON,
+}
 
 final mediaTypeValues = EnumValues({
   "movie": MediaType.MOVIE,

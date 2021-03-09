@@ -80,8 +80,32 @@ class DetailMovieView extends GetView {
                       icon: Icon(
                         Icons.arrow_back_rounded,
                         size: 35,
+                        color: Colors.redAccent,
                       ),
                       onPressed: () => Get.back(),
+                    ),
+                  ),
+                  Positioned(
+                    top: 20,
+                    right: 10,
+                    child: Obx(
+                      () => controller.isBookmark.value == false
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.bookmark_outline_rounded,
+                                size: 35,
+                                color: Colors.redAccent,
+                              ),
+                              onPressed: () => controller.addBookmarks(),
+                            )
+                          : IconButton(
+                              icon: Icon(
+                                Icons.bookmark_rounded,
+                                size: 35,
+                                color: Colors.redAccent,
+                              ),
+                              onPressed: () => controller.removeBookmarks(),
+                            ),
                     ),
                   ),
                 ],
