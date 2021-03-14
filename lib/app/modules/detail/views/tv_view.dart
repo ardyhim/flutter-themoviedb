@@ -24,7 +24,7 @@ class DetailTvView extends GetView {
                 color: Colors.redAccent,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${controller.tv.value.posterPath}"),
+                  image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.tv.value.posterPath}"),
                 ),
               ),
               child: Stack(
@@ -91,14 +91,19 @@ class DetailTvView extends GetView {
                     top: 20,
                     right: 10,
                     child: Obx(
-                      () => controller.isBookmark.value == false
+                      () => controller.accountStates.value.favorite == false || controller.accountStates.value.favorite == null
                           ? IconButton(
                               icon: Icon(
                                 Icons.bookmark_outline_rounded,
                                 size: 35,
                                 color: Colors.redAccent,
                               ),
-                              onPressed: () => controller.addBookmarks(),
+                              onPressed: () {
+                                if (controller.accountStates.value.favorite != null)
+                                  controller.markAsFavorite();
+                                else
+                                  Get.snackbar("Error", "Please Sign In");
+                              },
                             )
                           : IconButton(
                               icon: Icon(
@@ -106,7 +111,7 @@ class DetailTvView extends GetView {
                                 size: 35,
                                 color: Colors.redAccent,
                               ),
-                              onPressed: () => controller.removeBookmarks(),
+                              onPressed: () => controller.markAsFavorite(),
                             ),
                     ),
                   ),
@@ -233,7 +238,7 @@ class DetailTvView extends GetView {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${controller.similarTv.value.results[i].posterPath}"),
+                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.similarTv.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

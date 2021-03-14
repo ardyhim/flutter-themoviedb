@@ -4,13 +4,13 @@ import 'package:hypemovies/app/data/providers/api_provider.dart';
 import 'package:hypemovies/app/data/services/database.dart';
 import 'package:hypemovies/app/modules/tabs/controllers/tabs_controller.dart';
 
-import '../controllers/detail_controller.dart';
+import '../controllers/users_controller.dart';
 
-class DetailBinding extends Bindings {
+class UsersBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DetailController>(
-      () => DetailController(apiRepository: Get.find()),
+    Get.lazyPut<UsersController>(
+      () => UsersController(apiRepository: Get.find()),
     );
     Get.lazyPut<TabsController>(
       () => TabsController(apiRepository: Get.find()),

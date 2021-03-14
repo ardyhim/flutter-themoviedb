@@ -4,15 +4,111 @@ import 'package:hypemovies/app/data/models/enum.dart';
 class ApiProvider extends GetConnect {
   Map<String, String> queryApi = {"api_key": "e3759057a7b881a632632b371ca441d5"};
   @override
-  void onInit() {
+  void onInit() async {
     print("api provider init");
     httpClient.baseUrl = 'https://api.themoviedb.org/3/';
     httpClient.addRequestModifier((request) {
       request.headers['api_key'] = 'e3759057a7b881a632632b371ca441d5';
       request.headers['Content-type'] = 'application/json';
       request.headers['Accept'] = 'application/json';
+      request.headers["Access-Control-Allow-Origin"] = "*";
       return request;
     });
+  }
+
+  Future<Response> createRequestToken() async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/authentication/token/new",
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> createSessionWithLogin({
+    String token,
+    String username,
+    String password,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await post(
+      "/authentication/token/validate_with_login",
+      {
+        "username": username,
+        "password": password,
+        "request_token": token,
+      },
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> createSession({
+    String token,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await post(
+      "/authentication/session/new",
+      {
+        "request_token": token,
+      },
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> getAccountStates({
+    String id,
+    String sessionId,
+    MediaType mediaType,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/${mediaTypeValues.reverse[mediaType]}/$id/account_states",
+      query: {
+        "session_id": sessionId,
+        ...queryApi,
+      },
+    );
+    return res;
+  }
+
+  Future<Response> getAccount({
+    String sessionId,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/account",
+      query: {
+        "session_id": sessionId,
+        ...queryApi,
+      },
+    );
+    return res;
+  }
+
+  Future<Response> markAsFavorite({
+    MediaType mediaType,
+    String id,
+    int accountId,
+    String sessionId,
+    bool favorite = true,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Map data = {
+      "media_type": mediaTypeValues.reverse[mediaType],
+      "media_id": int.parse(id),
+      "favorite": favorite,
+    };
+    Response res = await post(
+      "/account/$accountId/favorite",
+      data,
+      query: {
+        "session_id": sessionId,
+        ...queryApi,
+      },
+    );
+    return res;
   }
 
   Future<Response> getDiscoverMovie({

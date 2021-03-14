@@ -6,8 +6,7 @@ import 'package:hypemovies/app/views/clipper.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class DetailMovieView extends GetView {
-  DetailController controller = Get.find<DetailController>();
+class DetailMovieView extends GetView<DetailController> {
   @override
   Widget build(BuildContext context) {
     Size size = context.mediaQuery.size;
@@ -23,7 +22,7 @@ class DetailMovieView extends GetView {
                 color: Colors.redAccent,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${controller.movies.value.posterPath}"),
+                  image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.movies.value.posterPath}"),
                 ),
               ),
               child: Stack(
@@ -89,14 +88,19 @@ class DetailMovieView extends GetView {
                     top: 20,
                     right: 10,
                     child: Obx(
-                      () => controller.isBookmark.value == false
+                      () => controller.accountStates.value.favorite == false || controller.accountStates.value.favorite == null
                           ? IconButton(
                               icon: Icon(
                                 Icons.bookmark_outline_rounded,
                                 size: 35,
                                 color: Colors.redAccent,
                               ),
-                              onPressed: () => controller.addBookmarks(),
+                              onPressed: () {
+                                if (controller.accountStates.value.favorite != null)
+                                  controller.markAsFavorite();
+                                else
+                                  Get.snackbar("Error", "Please Sign In");
+                              },
                             )
                           : IconButton(
                               icon: Icon(
@@ -104,7 +108,7 @@ class DetailMovieView extends GetView {
                                 size: 35,
                                 color: Colors.redAccent,
                               ),
-                              onPressed: () => controller.removeBookmarks(),
+                              onPressed: () => controller.markAsFavorite(),
                             ),
                     ),
                   ),
@@ -225,7 +229,7 @@ class DetailMovieView extends GetView {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${controller.similarMovies.value.results[i].posterPath}"),
+                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.similarMovies.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

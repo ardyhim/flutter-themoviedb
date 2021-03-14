@@ -1,9 +1,14 @@
+import 'package:hypemovies/app/data/models/account.dart';
+import 'package:hypemovies/app/data/models/account_state.dart';
+import 'package:hypemovies/app/data/models/create_session.dart';
 import 'package:hypemovies/app/data/models/detail_movies.dart';
 import 'package:hypemovies/app/data/models/detail_tv.dart';
 import 'package:hypemovies/app/data/models/discover_movies.dart';
 import 'package:hypemovies/app/data/models/discover_tv.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
+import 'package:hypemovies/app/data/models/message.dart';
 import 'package:hypemovies/app/data/models/search_model.dart';
+import 'package:hypemovies/app/data/models/session_with_login.dart';
 import 'package:hypemovies/app/data/models/similar_movies.dart';
 import 'package:hypemovies/app/data/models/similar_tv.dart';
 import 'package:hypemovies/app/data/models/trending_model.dart';
@@ -11,8 +16,106 @@ import 'package:hypemovies/app/data/models/videos.dart';
 import 'package:hypemovies/app/data/providers/api_provider.dart';
 
 class ApiRepository {
-  ApiRepository({this.provider});
   final ApiProvider provider;
+  ApiRepository({this.provider});
+
+  Future<ModelSessionWithLogin> createRequestToken() async {
+    final res = await provider.createRequestToken();
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelSessionWithLogin data;
+      data = new ModelSessionWithLogin.fromJson(res.body);
+      return data;
+    }
+  }
+
+  Future<ModelSessionWithLogin> createSessionWithLogin({
+    String username,
+    String password,
+    String token,
+  }) async {
+    final res = await provider.createSessionWithLogin(
+      token: token,
+      username: username,
+      password: password,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelSessionWithLogin data;
+      data = new ModelSessionWithLogin.fromJson(res.body);
+      return data;
+    }
+  }
+
+  Future<ModelCreateSession> createSession({String token}) async {
+    final res = await provider.createSession(
+      token: token,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelCreateSession data;
+      data = new ModelCreateSession.fromJson(res.body);
+      return data;
+    }
+  }
+
+  Future<ModelAccount> getAccount({String sessionId}) async {
+    final res = await provider.getAccount(
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelAccount data;
+      data = new ModelAccount.fromJson(res.body);
+      return data;
+    }
+  }
+
+  Future<ModelAccountState> getAccountStates({
+    String id,
+    MediaType mediaType,
+    String sessionId,
+  }) async {
+    final res = await provider.getAccountStates(
+      sessionId: sessionId,
+      id: id,
+      mediaType: mediaType,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelAccountState accountState;
+      accountState = new ModelAccountState.fromJson(res.body);
+      return accountState;
+    }
+  }
+
+  Future<ModelMessage> markAsFavorite({
+    MediaType mediaType,
+    String id,
+    bool favorite = true,
+    int accountId,
+    String sessionId,
+  }) async {
+    final res = await provider.markAsFavorite(
+      mediaType: mediaType,
+      id: id,
+      accountId: accountId,
+      favorite: favorite,
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelMessage data;
+      data = new ModelMessage.fromJson(res.body);
+      return data;
+    }
+  }
 
   Future<ModelDiscoverMovies> getDiscoverMovie({
     int page = 1,

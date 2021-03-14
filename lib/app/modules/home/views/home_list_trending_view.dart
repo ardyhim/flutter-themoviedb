@@ -36,7 +36,7 @@ class HomeListTrending extends StatelessWidget {
                         image: DecorationImage(
                           image: val.trending.value.results[i].posterPath == null
                               ? AssetImage("/assets/images/not-found.png")
-                              : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${val.trending.value.results[i].posterPath}"),
+                              : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${val.trending.value.results[i].posterPath}"),
                           fit: BoxFit.cover,
                         ),
                       ),
