@@ -1,16 +1,13 @@
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hypemovies/app/data/controllers/api_repository.dart';
 import 'package:hypemovies/app/data/models/account_state.dart';
 import 'package:hypemovies/app/data/models/detail_movies.dart';
 import 'package:hypemovies/app/data/models/detail_tv.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
-import 'package:hypemovies/app/data/models/message.dart';
 import 'package:hypemovies/app/data/models/similar_movies.dart';
 import 'package:hypemovies/app/data/models/similar_tv.dart';
 import 'package:hypemovies/app/data/models/videos.dart';
-import 'package:hypemovies/app/data/models/bookmarks.dart';
 import 'package:hypemovies/app/data/services/database.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -30,9 +27,6 @@ class DetailController extends GetxController with StateMixin {
   var isBookmark = false.obs;
 
   fetchData() async {
-    // var box = await Hive.openBox<StoreBookmark>("bookmarks");
-    // StoreBookmark storeBookmark = box.get(int.parse(id));
-    // storeBookmark == null ? isBookmark.value = false : isBookmark.value = true;
     change("detail", status: RxStatus.loading());
     if (identical(mediaType.value, MediaType.MOVIE)) {
       movies.value = await apiRepository.getDetailMovies(id: id);
@@ -54,7 +48,7 @@ class DetailController extends GetxController with StateMixin {
   }
 
   markAsFavorite() async {
-    ModelMessage res = await apiRepository.markAsFavorite(
+    await apiRepository.markAsFavorite(
       id: id,
       mediaType: mediaType.value,
       favorite: !accountStates.value.favorite,
@@ -64,39 +58,6 @@ class DetailController extends GetxController with StateMixin {
     accountStates.value.favorite = !accountStates.value.favorite;
     update();
   }
-
-  // removeBookmarks() async {
-  //   var box = Hive.box<StoreBookmark>("bookmarks");
-  //   await box.delete(int.parse(id));
-  //   isBookmark.value = false;
-  // }
-
-  // addBookmarks() async {
-  //   var box = await Hive.openBox<StoreBookmark>("bookmarks");
-  //   StoreBookmark storeBookmark;
-  //   if (identical(mediaType.value, MediaType.MOVIE)) {
-  //     storeBookmark = StoreBookmark(
-  //       id: int.parse(id),
-  //       name: movies.value.title,
-  //       overview: movies.value.overview,
-  //       voteAverage: movies.value.voteAverage,
-  //       genres: movies.value.genres,
-  //       posterPath: movies.value.posterPath,
-  //       mediaType: MediaType.MOVIE,
-  //     );
-  //   } else {
-  //     storeBookmark = StoreBookmark(
-  //         id: int.parse(id),
-  //         name: tv.value.name,
-  //         overview: tv.value.overview,
-  //         voteAverage: tv.value.voteAverage,
-  //         genres: tv.value.genres,
-  //         posterPath: tv.value.posterPath,
-  //         mediaType: MediaType.TV);
-  //   }
-  //   await box.put(int.parse(id), storeBookmark);
-  //   isBookmark.value = true;
-  // }
 
   launchUrl({String key}) async {
     String url = "https://www.youtube.com/watch?v=$key";

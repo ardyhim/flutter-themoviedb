@@ -31,7 +31,7 @@ class DetailMovieView extends GetView<DetailController> {
                     clipper: MyClipper(),
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: MediaQuery.of(context).size.height / 2,
+                      height: size.height / 2,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.white,

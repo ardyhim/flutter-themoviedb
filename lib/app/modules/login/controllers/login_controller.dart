@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hypemovies/app/data/controllers/api_repository.dart';
-import 'package:hypemovies/app/data/models/account.dart';
 import 'package:hypemovies/app/data/models/create_session.dart';
 import 'package:hypemovies/app/data/models/session_with_login.dart';
 import 'package:hypemovies/app/data/services/database.dart';

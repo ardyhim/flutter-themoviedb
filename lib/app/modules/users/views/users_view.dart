@@ -1,75 +1,190 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hypemovies/app/data/services/database.dart';
-import 'package:hypemovies/app/modules/tabs/controllers/tabs_controller.dart';
+import 'package:hypemovies/app/modules/users/views/favorite_movie.dart';
+import 'package:hypemovies/app/modules/users/views/favorite_tv.dart';
+import 'package:hypemovies/app/modules/users/views/watch_list_movie.dart';
+import 'package:hypemovies/app/modules/users/views/watch_list_tv.dart';
+import 'package:hypemovies/app/views/label.dart';
 
 import '../controllers/users_controller.dart';
 
 class UsersView extends GetView<UsersController> {
+  DbService db = Get.find<DbService>();
   @override
   Widget build(BuildContext context) {
-    TabsController tabsController = Get.find<TabsController>();
+    Size size = context.mediaQuery.size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('UsersView'),
-        centerTitle: true,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Center(
-              child: GetX<DbService>(
-                init: Get.find<DbService>(),
-                builder: (db) {
-                  return Text(
-                    "${db.account.value.username}",
-                    style: TextStyle(fontSize: 20),
-                  );
-                },
+      body: db.sessionId.value == null
+          ? Container(
+              child: Center(
+                child: TextButton(
+                  child: Text(
+                    "Please Login!",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
               ),
+            )
+          : CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Container(
+                    width: size.width,
+                    height: size.height / 100 * 30,
+                    child: Stack(
+                      children: [
+                        CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          width: size.width,
+                          height: size.height / 100 * 23,
+                          imageUrl: "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
+                        ),
+                        ClipRect(
+                          child: new BackdropFilter(
+                            filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                            child: new Container(
+                              width: size.width,
+                              height: size.height / 100 * 23,
+                              decoration: new BoxDecoration(
+                                color: Colors.grey.shade200.withOpacity(0.3),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            width: size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    height: size.height / 100 * 15,
+                                    width: size.height / 100 * 15,
+                                    decoration: BoxDecoration(
+                                      color: Colors.redAccent,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        width: 3,
+                                        color: Colors.redAccent,
+                                      ),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: CachedNetworkImageProvider(
+                                          "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width - (size.height / 100 * 15) - 90,
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    db.account.value.username,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context).textTheme.headline4.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                  ),
+                                ),
+                                Container(
+                                  color: Colors.redAccent,
+                                  width: 50,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: IconButton(
+                                      icon: Icon(Icons.logout),
+                                      color: Colors.white,
+                                      onPressed: () => controller.logout(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: LabelWidgets(
+                    firstText: "Favorites Movies",
+                    secondText: "View All",
+                    onTap: () {
+                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                    },
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 200,
+                    width: size.width,
+                    child: UsersFavoriteMovieView(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: LabelWidgets(
+                    firstText: "Favorites Tv",
+                    secondText: "View All",
+                    onTap: () {
+                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                    },
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 200,
+                    width: size.width,
+                    child: UsersFavoriteTvView(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: LabelWidgets(
+                    firstText: "Watch List Movies",
+                    secondText: "View All",
+                    onTap: () {
+                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                    },
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 200,
+                    width: size.width,
+                    child: UsersWatchListMovieView(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: LabelWidgets(
+                    firstText: "Watch List Tv",
+                    secondText: "View All",
+                    onTap: () {
+                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                    },
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 200,
+                    width: size.width,
+                    child: UsersWatchListTvView(),
+                  ),
+                ),
+              ],
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Center(
-              child: GetX<DbService>(
-                init: Get.find<DbService>(),
-                builder: (db) {
-                  return Text(
-                    "${db.sessionId.value}",
-                    style: TextStyle(fontSize: 20),
-                  );
-                },
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                Get.offNamed("/login");
-              },
-              child: Text("LOGIN"),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                // Get.offNamed("/login");
-                // db.sessionId.value = "abc";
-              },
-              child: Text("Db Test"),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                controller.logout();
-              },
-              child: Text("LOGOUT"),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hypemovies/app/data/controllers/api_repository.dart';
 import 'package:hypemovies/app/data/models/account.dart';
-import 'package:hypemovies/app/data/providers/api_provider.dart';
 
 class DbService extends GetxService {
   Box setting;

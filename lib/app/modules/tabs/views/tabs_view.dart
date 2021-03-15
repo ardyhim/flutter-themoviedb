@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:hypemovies/app/routes/app_pages.dart';
 
 import '../controllers/tabs_controller.dart';
 

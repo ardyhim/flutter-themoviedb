@@ -6,6 +6,8 @@ import 'package:hypemovies/app/data/models/detail_tv.dart';
 import 'package:hypemovies/app/data/models/discover_movies.dart';
 import 'package:hypemovies/app/data/models/discover_tv.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
+import 'package:hypemovies/app/data/models/users_movies.dart';
+import 'package:hypemovies/app/data/models/users_tv.dart';
 import 'package:hypemovies/app/data/models/message.dart';
 import 'package:hypemovies/app/data/models/search_model.dart';
 import 'package:hypemovies/app/data/models/session_with_login.dart';
@@ -114,6 +116,82 @@ class ApiRepository {
       ModelMessage data;
       data = new ModelMessage.fromJson(res.body);
       return data;
+    }
+  }
+
+  Future<ModelUsersMovies> getFavoriteMovie({
+    int page = 1,
+    String sessionId,
+    int accountId,
+  }) async {
+    final res = await provider.getFavoriteMovie(
+      page: page,
+      accountId: accountId,
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelUsersMovies movies;
+      movies = new ModelUsersMovies.fromJson(res.body);
+      return movies;
+    }
+  }
+
+  Future<ModelUsersTv> getFavoriteTv({
+    int page = 1,
+    String sessionId,
+    int accountId,
+  }) async {
+    final res = await provider.getFavoriteTv(
+      page: page,
+      accountId: accountId,
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelUsersTv tv;
+      tv = new ModelUsersTv.fromJson(res.body);
+      return tv;
+    }
+  }
+
+  Future<ModelUsersMovies> getWatchListMovie({
+    int page = 1,
+    String sessionId,
+    int accountId,
+  }) async {
+    final res = await provider.getWatchListMovie(
+      page: page,
+      accountId: accountId,
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelUsersMovies movies;
+      movies = new ModelUsersMovies.fromJson(res.body);
+      return movies;
+    }
+  }
+
+  Future<ModelUsersTv> getWatchListTv({
+    int page = 1,
+    String sessionId,
+    int accountId,
+  }) async {
+    final res = await provider.getWatchListTv(
+      page: page,
+      accountId: accountId,
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelUsersTv tv;
+      tv = new ModelUsersTv.fromJson(res.body);
+      return tv;
     }
   }
 

@@ -111,6 +111,74 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> getFavoriteMovie({
+    int page = 1,
+    int accountId,
+    String sessionId,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/account/$accountId/favorite/movies",
+      query: {
+        "session_id": sessionId,
+        "page": page.toString(),
+        ...queryApi,
+      },
+    );
+    return res;
+  }
+
+  Future<Response> getFavoriteTv({
+    int page = 1,
+    int accountId,
+    String sessionId,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/account/$accountId/favorite/tv",
+      query: {
+        "session_id": sessionId,
+        "page": page.toString(),
+        ...queryApi,
+      },
+    );
+    return res;
+  }
+
+  Future<Response> getWatchListMovie({
+    int page = 1,
+    int accountId,
+    String sessionId,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/account/$accountId/watchlist/movies",
+      query: {
+        "session_id": sessionId,
+        "page": page.toString(),
+        ...queryApi,
+      },
+    );
+    return res;
+  }
+
+  Future<Response> getWatchListTv({
+    int page = 1,
+    int accountId,
+    String sessionId,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await get(
+      "/account/$accountId/watchlist/tv",
+      query: {
+        "session_id": sessionId,
+        "page": page.toString(),
+        ...queryApi,
+      },
+    );
+    return res;
+  }
+
   Future<Response> getDiscoverMovie({
     int page = 1,
     SortBy sortBy = SortBy.POPULARITY_DECS,
