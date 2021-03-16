@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hypemovies/app/data/models/enum.dart';
 import 'package:hypemovies/app/data/services/database.dart';
 import 'package:hypemovies/app/modules/users/views/favorite_movie.dart';
 import 'package:hypemovies/app/modules/users/views/favorite_tv.dart';
@@ -45,7 +46,9 @@ class UsersView extends GetView<UsersController> {
                           fit: BoxFit.cover,
                           width: size.width,
                           height: size.height / 100 * 23,
-                          imageUrl: "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
+                          imageUrl: db.account.value.avatar == null
+                              ? "assets/images/not-found.png"
+                              : "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
                         ),
                         ClipRect(
                           child: new BackdropFilter(
@@ -80,9 +83,11 @@ class UsersView extends GetView<UsersController> {
                                       ),
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: CachedNetworkImageProvider(
-                                          "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
-                                        ),
+                                        image: db.account.value.avatar == null
+                                            ? AssetImage("assets/images/not-found.png")
+                                            : CachedNetworkImageProvider(
+                                                "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
+                                              ),
                                       ),
                                     ),
                                   ),
@@ -91,7 +96,7 @@ class UsersView extends GetView<UsersController> {
                                   width: size.width - (size.height / 100 * 15) - 90,
                                   padding: EdgeInsets.only(left: 10),
                                   child: Text(
-                                    db.account.value.username,
+                                    db.account.value.username == null ? "" : db.account.value.username,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.headline4.copyWith(
@@ -124,7 +129,7 @@ class UsersView extends GetView<UsersController> {
                     firstText: "Favorites Movies",
                     secondText: "View All",
                     onTap: () {
-                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                      Get.toNamed("/favorites/movie/${sortByValues.reverse[SortBy.CREATED_AT_DESC]}");
                     },
                   ),
                 ),
@@ -140,7 +145,7 @@ class UsersView extends GetView<UsersController> {
                     firstText: "Favorites Tv",
                     secondText: "View All",
                     onTap: () {
-                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                      Get.toNamed("/favorites/tv/${sortByValues.reverse[SortBy.CREATED_AT_DESC]}");
                     },
                   ),
                 ),
@@ -156,7 +161,7 @@ class UsersView extends GetView<UsersController> {
                     firstText: "Watch List Movies",
                     secondText: "View All",
                     onTap: () {
-                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                      Get.toNamed("/watchlist/movie/${sortByValues.reverse[SortBy.CREATED_AT_DESC]}");
                     },
                   ),
                 ),
@@ -172,7 +177,7 @@ class UsersView extends GetView<UsersController> {
                     firstText: "Watch List Tv",
                     secondText: "View All",
                     onTap: () {
-                      // Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}");
+                      Get.toNamed("/watchlist/tv/${sortByValues.reverse[SortBy.CREATED_AT_DESC]}");
                     },
                   ),
                 ),

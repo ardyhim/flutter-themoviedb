@@ -24,6 +24,14 @@ final mediaTypeValues = EnumValues({
   "person": MediaType.PERSON,
 });
 
+enum ListType {
+  FAVORITE,
+  WATCHLIST,
+  DISCOVER,
+}
+
+final listTypeValues = EnumValues({});
+
 enum SortBy {
   POPULARITY_DECS,
   POPULARITY_ASC,
@@ -39,6 +47,8 @@ enum SortBy {
   VOTE_AVERAGE_ASC,
   VOTE_COUNT_DESC,
   VOTE_COUNT_ASC,
+  CREATED_AT_DESC,
+  CREATED_AT_ASC,
 }
 final sortByValues = EnumValues({
   "popularity.desc": SortBy.POPULARITY_DECS,
@@ -55,6 +65,8 @@ final sortByValues = EnumValues({
   "vote_average.asc": SortBy.VOTE_AVERAGE_ASC,
   "vote_count.desc": SortBy.VOTE_COUNT_DESC,
   "vote_count.asc": SortBy.VOTE_COUNT_ASC,
+  "created_at.desc": SortBy.CREATED_AT_DESC,
+  "created_at.asc": SortBy.CREATED_AT_ASC,
 });
 
 enum OriginCountry { US, ES, CA, MX }

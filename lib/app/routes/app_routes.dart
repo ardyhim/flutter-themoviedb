@@ -10,6 +10,8 @@ abstract class Routes {
   static const FAVORITE = _Paths.FAVORITE;
   static const LOGIN = _Paths.LOGIN;
   static const USERS = _Paths.USERS;
+  static const FAVORITES = _Paths.FAVORITES;
+  static const WATCH_LIST = _Paths.WATCH_LIST;
 }
 
 abstract class _Paths {
@@ -21,4 +23,6 @@ abstract class _Paths {
   static const FAVORITE = '/favorite';
   static const LOGIN = '/login';
   static const USERS = '/users';
+  static const FAVORITES = '/favorites/:category/:sortBy';
+  static const WATCH_LIST = '/watchlist/:category/:sortBy';
 }

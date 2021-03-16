@@ -123,11 +123,13 @@ class ApiRepository {
     int page = 1,
     String sessionId,
     int accountId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     final res = await provider.getFavoriteMovie(
       page: page,
       accountId: accountId,
       sessionId: sessionId,
+      sortBy: sortBy,
     );
     if (res.status.hasError) {
       return Future.error(res.statusText);
@@ -142,11 +144,13 @@ class ApiRepository {
     int page = 1,
     String sessionId,
     int accountId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     final res = await provider.getFavoriteTv(
       page: page,
       accountId: accountId,
       sessionId: sessionId,
+      sortBy: sortBy,
     );
     if (res.status.hasError) {
       return Future.error(res.statusText);
@@ -161,11 +165,13 @@ class ApiRepository {
     int page = 1,
     String sessionId,
     int accountId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     final res = await provider.getWatchListMovie(
       page: page,
       accountId: accountId,
       sessionId: sessionId,
+      sortBy: sortBy,
     );
     if (res.status.hasError) {
       return Future.error(res.statusText);
@@ -180,11 +186,13 @@ class ApiRepository {
     int page = 1,
     String sessionId,
     int accountId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     final res = await provider.getWatchListTv(
       page: page,
       accountId: accountId,
       sessionId: sessionId,
+      sortBy: sortBy,
     );
     if (res.status.hasError) {
       return Future.error(res.statusText);

@@ -115,12 +115,14 @@ class ApiProvider extends GetConnect {
     int page = 1,
     int accountId,
     String sessionId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/account/$accountId/favorite/movies",
       query: {
         "session_id": sessionId,
+        "sort_by": sortByValues.reverse[sortBy],
         "page": page.toString(),
         ...queryApi,
       },
@@ -132,12 +134,14 @@ class ApiProvider extends GetConnect {
     int page = 1,
     int accountId,
     String sessionId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/account/$accountId/favorite/tv",
       query: {
         "session_id": sessionId,
+        "sort_by": sortByValues.reverse[sortBy],
         "page": page.toString(),
         ...queryApi,
       },
@@ -149,12 +153,14 @@ class ApiProvider extends GetConnect {
     int page = 1,
     int accountId,
     String sessionId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/account/$accountId/watchlist/movies",
       query: {
         "session_id": sessionId,
+        "sort_by": sortByValues.reverse[sortBy],
         "page": page.toString(),
         ...queryApi,
       },
@@ -166,12 +172,14 @@ class ApiProvider extends GetConnect {
     int page = 1,
     int accountId,
     String sessionId,
+    SortBy sortBy = SortBy.CREATED_AT_DESC,
   }) async {
     httpClient.baseUrl = 'https://api.themoviedb.org/3';
     Response res = await get(
       "/account/$accountId/watchlist/tv",
       query: {
         "session_id": sessionId,
+        "sort_by": sortByValues.reverse[sortBy],
         "page": page.toString(),
         ...queryApi,
       },
@@ -187,7 +195,7 @@ class ApiProvider extends GetConnect {
     Response res = await get(
       "/discover/movie",
       query: {
-        "sortBy": sortByValues.reverse[sortBy],
+        "sort_by": sortByValues.reverse[sortBy],
         "page": page.toString(),
         ...queryApi,
       },
@@ -203,7 +211,7 @@ class ApiProvider extends GetConnect {
     Response res = await get(
       "/discover/tv",
       query: {
-        "sortBy": sortByValues.reverse[sortBy],
+        "sort_by": sortByValues.reverse[sortBy],
         "page": page.toString(),
         ...queryApi,
       },

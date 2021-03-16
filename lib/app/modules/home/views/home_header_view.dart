@@ -98,7 +98,7 @@ class HomeHeader extends StatelessWidget {
                               vertical: 10,
                             ),
                             text: 'Movies',
-                            onTap: () => Get.toNamed("/list/movie/${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}"),
+                            onTap: () => Get.toNamed("/list/movie/${sortByValues.reverse[SortBy.POPULARITY_DECS]}"),
                           ),
                         ),
                         Expanded(
@@ -111,7 +111,7 @@ class HomeHeader extends StatelessWidget {
                               vertical: 10,
                             ),
                             text: 'Tv Series',
-                            onTap: () => Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.PRIMARY_RELEASE_DATE_DESC]}"),
+                            onTap: () => Get.toNamed("/list/tv/${sortByValues.reverse[SortBy.POPULARITY_DECS]}"),
                           ),
                         ),
                       ],
