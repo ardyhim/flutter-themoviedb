@@ -71,7 +71,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         backdropPath: json["backdrop_path"] == null ? null : json["backdrop_path"],
-        firstAirDate: json["first_air_date"] == null ? null : DateTime.parse(json["first_air_date"]),
+        firstAirDate: json["first_air_date"] == null || json["first_air_date"] == "" ? null : DateTime.parse(json["first_air_date"]),
         genreIds: json["genre_ids"] == null ? null : List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"] == null ? null : json["id"],
         name: json["name"] == null ? null : json["name"],

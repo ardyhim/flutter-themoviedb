@@ -22,7 +22,9 @@ class DetailMovieView extends GetView<DetailController> {
                 color: Colors.redAccent,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.movies.value.posterPath}"),
+                  image: controller.movies.value.backdropPath == null
+                      ? AssetImage("assets/images/not-found.png")
+                      : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w780${controller.movies.value.backdropPath}"),
                 ),
               ),
               child: Stack(
@@ -67,7 +69,9 @@ class DetailMovieView extends GetView<DetailController> {
                           borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${controller.movies.value.backdropPath}"),
+                            image: controller.movies.value.posterPath == null
+                                ? AssetImage("assets/images/not-found.png")
+                                : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.movies.value.posterPath}"),
                           ),
                         ),
                       ),
@@ -229,7 +233,9 @@ class DetailMovieView extends GetView<DetailController> {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.similarMovies.value.results[i].posterPath}"),
+                                    image: controller.similarMovies.value.results[i].posterPath == null
+                                        ? AssetImage("assets/images/not-found.png")
+                                        : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.similarMovies.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

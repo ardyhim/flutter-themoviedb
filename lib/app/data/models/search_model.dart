@@ -179,7 +179,7 @@ class ModelSearchKnownFor {
         posterPath: json["poster_path"] == null ? null : json["poster_path"],
         adult: json["adult"] == null ? null : json["adult"],
         overview: json["overview"] == null ? null : json["overview"],
-        releaseDate: json["release_date"] == null ? null : DateTime.parse(json["release_date"]),
+        releaseDate: json["release_date"] == null || json["release_date"] == "" ? null : DateTime.parse(json["release_date"]),
         originalTitle: json["original_title"] == null ? null : json["original_title"],
         genreIds: json["genre_ids"] == null ? null : List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"] == null ? null : json["id"],

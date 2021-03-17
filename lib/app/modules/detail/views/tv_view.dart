@@ -24,7 +24,9 @@ class DetailTvView extends GetView {
                 color: Colors.redAccent,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.tv.value.posterPath}"),
+                  image: controller.tv.value.backdropPath == null
+                      ? AssetImage("assets/images/not-found.png")
+                      : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w780${controller.tv.value.backdropPath}"),
                 ),
               ),
               child: Stack(
@@ -70,7 +72,9 @@ class DetailTvView extends GetView {
                           borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w500${controller.tv.value.backdropPath}"),
+                            image: controller.tv.value.posterPath == null
+                                ? AssetImage("assets/images/not-found.png")
+                                : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w300${controller.tv.value.posterPath}"),
                           ),
                         ),
                       ),
@@ -238,7 +242,9 @@ class DetailTvView extends GetView {
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.similarTv.value.results[i].posterPath}"),
+                                    image: controller.similarTv.value.results[i].posterPath == null
+                                        ? AssetImage("assets/images/not-found.png")
+                                        : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${controller.similarTv.value.results[i].posterPath}"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

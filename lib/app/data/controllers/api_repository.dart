@@ -6,6 +6,7 @@ import 'package:hypemovies/app/data/models/detail_tv.dart';
 import 'package:hypemovies/app/data/models/discover_movies.dart';
 import 'package:hypemovies/app/data/models/discover_tv.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
+import 'package:hypemovies/app/data/models/guest_session.dart';
 import 'package:hypemovies/app/data/models/users_movies.dart';
 import 'package:hypemovies/app/data/models/users_tv.dart';
 import 'package:hypemovies/app/data/models/message.dart';
@@ -60,6 +61,32 @@ class ApiRepository {
     } else {
       ModelCreateSession data;
       data = new ModelCreateSession.fromJson(res.body);
+      return data;
+    }
+  }
+
+  Future<ModelGuestSession> createGuestSession({String token}) async {
+    final res = await provider.createGuestSession(
+      token: token,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelGuestSession data;
+      data = new ModelGuestSession.fromJson(res.body);
+      return data;
+    }
+  }
+
+  Future<ModelMessage> deleteSession({String sessionId}) async {
+    final res = await provider.deleteSession(
+      sessionId: sessionId,
+    );
+    if (res.status.hasError) {
+      return Future.error(res.statusText);
+    } else {
+      ModelMessage data;
+      data = new ModelMessage.fromJson(res.body);
       return data;
     }
   }

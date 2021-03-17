@@ -113,7 +113,9 @@ class ListView extends GetView<ListController> {
                                     color: Colors.redAccent,
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${lc.tv.value.results[i].posterPath}"),
+                                      image: lc.tv.value.results[i].posterPath == null
+                                          ? AssetImage("assets/images/not-found.png")
+                                          : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${lc.tv.value.results[i].posterPath}"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),

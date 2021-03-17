@@ -83,7 +83,7 @@ class Result {
         overview: json["overview"] == null ? null : json["overview"],
         popularity: json["popularity"] == null ? null : json["popularity"].toDouble(),
         posterPath: json["poster_path"] == null ? null : json["poster_path"],
-        releaseDate: json["release_date"] == null ? null : DateTime.parse(json["release_date"]),
+        releaseDate: json["release_date"] == null || json["release_date"] == "" ? null : DateTime.parse(json["release_date"]),
         title: json["title"] == null ? null : json["title"],
         video: json["video"] == null ? null : json["video"],
         voteAverage: json["vote_average"] == null ? null : json["vote_average"].toDouble(),

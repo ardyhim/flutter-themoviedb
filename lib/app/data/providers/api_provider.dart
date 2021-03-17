@@ -57,6 +57,34 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> createGuestSession({
+    String token,
+  }) async {
+    httpClient.baseUrl = 'https://api.themoviedb.org/3';
+    Response res = await post(
+      "/authentication/guest_session/new",
+      {
+        "request_token": token,
+      },
+      query: {...queryApi},
+    );
+    return res;
+  }
+
+  Future<Response> deleteSession({
+    String sessionId,
+  }) async {
+    Response res = await request(
+      "/authentication/session",
+      "DELETE",
+      query: {...queryApi},
+      body: {
+        "session_id": sessionId,
+      },
+    );
+    return res;
+  }
+
   Future<Response> getAccountStates({
     String id,
     String sessionId,

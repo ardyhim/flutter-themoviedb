@@ -42,14 +42,21 @@ class UsersView extends GetView<UsersController> {
                     height: size.height / 100 * 30,
                     child: Stack(
                       children: [
-                        CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          width: size.width,
-                          height: size.height / 100 * 23,
-                          imageUrl: db.account.value.avatar == null
-                              ? "assets/images/not-found.png"
-                              : "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
-                        ),
+                        db.account.value.avatar == null
+                            ? Image.asset(
+                                "assets/images/not-found.png",
+                                fit: BoxFit.cover,
+                                width: size.width,
+                                height: size.height / 100 * 23,
+                              )
+                            : CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                width: size.width,
+                                height: size.height / 100 * 23,
+                                imageUrl: db.account.value.avatar == null
+                                    ? "assets/images/not-found.png"
+                                    : "https://www.gravatar.com/avatar/${db.account.value.avatar.gravatar.hash}",
+                              ),
                         ClipRect(
                           child: new BackdropFilter(
                             filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),

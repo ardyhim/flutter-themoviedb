@@ -79,7 +79,7 @@ class ModelMovies {
             json["production_companies"] == null ? null : List<ProductionCompany>.from(json["production_companies"].map((x) => ProductionCompany.fromJson(x))),
         productionCountries:
             json["production_countries"] == null ? null : List<ProductionCountry>.from(json["production_countries"].map((x) => ProductionCountry.fromJson(x))),
-        releaseDate: json["release_date"] == null ? null : DateTime.parse(json["release_date"]),
+        releaseDate: json["release_date"] == null || json["release_date"] == "" ? null : DateTime.parse(json["release_date"]),
         revenue: json["revenue"] == null ? null : json["revenue"],
         runtime: json["runtime"] == null ? null : json["runtime"],
         spokenLanguages: json["spoken_languages"] == null ? null : List<SpokenLanguage>.from(json["spoken_languages"].map((x) => SpokenLanguage.fromJson(x))),

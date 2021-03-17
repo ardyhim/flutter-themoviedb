@@ -16,10 +16,6 @@ class UsersController extends GetxController {
   var watchListMovies = new ModelUsersMovies().obs;
   var watchListTv = new ModelUsersTv().obs;
 
-  test() {
-    print(db.account.value);
-  }
-
   fetchData() async {
     favoriteMovies.value = await apiRepository.getFavoriteMovie(
       page: 1,
@@ -48,6 +44,7 @@ class UsersController extends GetxController {
   }
 
   logout() async {
+    await apiRepository.deleteSession(sessionId: db.sessionId.value);
     db.remove();
     Get.offNamed("/login");
   }

@@ -10,15 +10,11 @@ class DbService extends GetxService {
   var account = ModelAccount().obs;
   Future<DbService> init() async {
     await Hive.initFlutter();
-    // Hive.registerAdapter(StoreBookmarkAdapter());
-    // Hive.registerAdapter(MediaTypeAdapter());
-    // Hive.registerAdapter(GenreAdapter());
     if (Hive.isBoxOpen("setting"))
       setting = Hive.box("setting");
     else
       setting = await Hive.openBox("setting");
     sessionId.value = await setting.get("session_id");
-    print(sessionId.value);
     return this;
   }
 
@@ -28,6 +24,7 @@ class DbService extends GetxService {
   }
 
   remove() async {
+    account.value = new ModelAccount();
     setting.delete("session_id");
   }
 }

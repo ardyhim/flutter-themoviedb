@@ -158,6 +158,36 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                   ),
+                  // Positioned(
+                  //   bottom: size.height / 100 * 5,
+                  //   child: Container(
+                  //     width: size.width - 20,
+                  //     margin: EdgeInsets.symmetric(horizontal: 10),
+                  //     child: OutlinedButton(
+                  //       child: Container(
+                  //         padding: EdgeInsets.all(20),
+                  //         child: Text(
+                  //           "LOGIN AS GUEST",
+                  //           style: Theme.of(context).textTheme.button.copyWith(
+                  //                 color: Colors.white,
+                  //               ),
+                  //         ),
+                  //       ),
+                  //       onPressed: () async {
+                  //         try {
+                  //           loginController.isLoading.value = false;
+                  //           await controller.loginAsGuest();
+                  //           // Get.snackbar("Login", "Success Login!");
+                  //           Get.offNamed("/tabs");
+                  //         } catch (e) {
+                  //           print(e);
+                  //           loginController.isLoading.value = false;
+                  //           Get.snackbar("Login", e);
+                  //         }
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                   Obx(
                     () => controller.isLoading.value
                         ? Container(

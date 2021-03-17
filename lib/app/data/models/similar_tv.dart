@@ -83,7 +83,7 @@ class Result {
         voteCount: json["vote_count"] == null ? null : json["vote_count"],
         name: json["name"] == null ? null : json["name"],
         id: json["id"] == null ? null : json["id"],
-        firstAirDate: json["first_air_date"] == null ? null : DateTime.parse(json["first_air_date"]),
+        firstAirDate: json["first_air_date"] == null || json["first_air_date"] == "" ? null : DateTime.parse(json["first_air_date"]),
         backdropPath: json["backdrop_path"] == null ? null : json["backdrop_path"],
         originalLanguage: json["original_language"] == null ? null : originalLanguageValues.map[json["original_language"]],
         popularity: json["popularity"] == null ? null : json["popularity"].toDouble(),
