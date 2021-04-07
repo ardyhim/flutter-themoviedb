@@ -33,7 +33,7 @@ class HomeListTv extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
                           image: val.tv.value.results[i].posterPath == null
-                              ? AssetImage("/assets/images/not-found.png")
+                              ? AssetImage("assets/images/not-found.png")
                               : CachedNetworkImageProvider("https://image.tmdb.org/t/p/w185${val.tv.value.results[i].posterPath}"),
                           fit: BoxFit.cover,
                         ),

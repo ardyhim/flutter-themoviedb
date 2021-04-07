@@ -15,23 +15,23 @@ class TabsView extends GetView<TabsController> {
         initialRoute: '/home',
         onGenerateRoute: controller.onGenerateRoute,
       ),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'HOME',
-                backgroundColor: Colors.red,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'USERS',
-                backgroundColor: Colors.green,
-              ),
-            ],
-            currentIndex: controller.currentIndex.value,
-            selectedItemColor: Colors.amber[800],
-            onTap: controller.changeTab,
-          )),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'HOME',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'USERS',
+            ),
+          ],
+          currentIndex: controller.currentIndex.value,
+          selectedItemColor: Colors.redAccent,
+          onTap: controller.changeTab,
+        ),
+      ),
     );
   }
 }
