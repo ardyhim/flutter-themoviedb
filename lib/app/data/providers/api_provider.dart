@@ -2,13 +2,12 @@ import 'package:get/get.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
 
 class ApiProvider extends GetConnect {
-  Map<String, String> queryApi = {"api_key": "e3759057a7b881a632632b371ca441d5"};
+  Map<String, String> queryApi = {"api_key": "e3759057a7b881a632632b371ca44111"};
   @override
   void onInit() async {
     print("api provider init");
     httpClient.baseUrl = 'https://api.themoviedb.org/3/';
     httpClient.addRequestModifier((request) {
-      request.headers['api_key'] = 'e3759057a7b881a632632b371ca441d5';
       request.headers['Content-type'] = 'application/json';
       request.headers['Accept'] = 'application/json';
       request.headers["Access-Control-Allow-Origin"] = "*";
