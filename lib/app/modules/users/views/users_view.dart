@@ -15,7 +15,7 @@ import 'package:hypemovies/app/views/label.dart';
 import '../controllers/users_controller.dart';
 
 class UsersView extends GetView<UsersController> {
-  DbService db = Get.find<DbService>();
+  final DbService db = Get.find<DbService>();
   @override
   Widget build(BuildContext context) {
     Size size = context.mediaQuery.size;
