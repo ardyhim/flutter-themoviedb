@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:hypemovies/app/data/models/enum.dart';
 
 class ApiProvider extends GetConnect {
-  Map<String, String> queryApi = {"api_key": "e3759057a7b881a632632b371ca44111"};
+  Map<String, String> queryApi = {"api_key": "e3759057a7b881a632632b371ca441d5"};
   @override
   void onInit() async {
     print("api provider init");

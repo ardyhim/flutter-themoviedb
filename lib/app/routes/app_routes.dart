@@ -19,7 +19,7 @@ abstract class _Paths {
   static const LIST = '/list/:category/:sortBy';
   static const DETAIL = '/detail/:type/:id';
   static const SEARCH = '/search/:keyword';
-  static const TABS = '/tabs';
+  static const TABS = '/main';
   static const FAVORITE = '/favorite';
   static const LOGIN = '/login';
   static const USERS = '/users';
